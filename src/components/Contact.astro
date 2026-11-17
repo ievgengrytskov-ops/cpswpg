@@ -42,8 +42,21 @@ const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
   const form = document.querySelector<HTMLFormElement>('#contact-form');
   if (form) {
     const status = form.querySelector<HTMLElement>('.status')!;
+    // Time trap against bots: a person needs a few seconds between the first touch of the form
+    // and "Send"; bots fill and submit instantly (or without any focus/input events at all).
+    // Such submissions are dropped silently with the normal "thank you", so bots learn nothing.
+    const MIN_MS = 3000;
+    let startedAt = 0;
+    const start = () => { if (!startedAt) startedAt = Date.now(); };
+    form.addEventListener('focusin', start);
+    form.addEventListener('input', start);
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!startedAt || Date.now() - startedAt < MIN_MS) {
+        form.reset();
+        status.textContent = 'Thank you. We will contact you soon.';
+        return;
+      }
       const endpoint = form.dataset.endpoint;
       if (!endpoint) { status.textContent = 'The form is not connected yet. Please call us.'; return; }
       const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
