@@ -1,13 +1,14 @@
 ---
 // WhatsApp / Viber buttons (owner 2026-11-17: both on the main number, site.messengers).
 // variant "pill": icon + label; "icon": square icon button (mobile call bar).
-import { site } from '../data/site';
+import { site, whatsappHref } from '../data/site';
 interface Props { variant?: 'pill' | 'icon'; class?: string }
 const { variant = 'pill', class: cls } = Astro.props;
+const hrefFor = (m: (typeof site.messengers)[number]) => (m.id === 'whatsapp' ? whatsappHref(Astro.url.pathname) : m.href);
 ---
 <div class:list={['msgr', `msgr--${variant}`, cls]}>
   {site.messengers.map((m) => (
-    <a class={`msgr-btn msgr-${m.id}`} href={m.href} rel="noopener" target={m.id === 'whatsapp' ? '_blank' : undefined}
+    <a class={`msgr-btn msgr-${m.id}`} href={hrefFor(m)} rel="noopener" target={m.id === 'whatsapp' ? '_blank' : undefined}
        aria-label={variant === 'icon' ? `Message us on ${m.label}` : undefined}>
       {m.id === 'whatsapp' ? (
         <svg viewBox="0 0 24 24" aria-hidden="true">

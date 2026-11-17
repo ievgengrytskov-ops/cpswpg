@@ -416,8 +416,19 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .team { width: 100%; margin-top: 2rem; }
 .form { display: grid; gap: 1.1rem; align-content: start; }
 .field label { display: block; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
-.field input, .field textarea { width: 100%; font: inherit; padding: 0.85rem 0.9rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
-.field input:focus, .field textarea:focus { border-color: var(--accent); outline: none; }
+.field input, .field textarea, .field select { width: 100%; font: inherit; padding: 0.85rem 0.9rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); outline: none; }
+.field select { appearance: none; cursor: pointer; padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent) 50%), linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position: calc(100% - 1.25rem) 55%, calc(100% - 0.95rem) 55%; background-size: 0.32rem 0.32rem; background-repeat: no-repeat; }
+.field select option { background: var(--panel); color: var(--ink); }
+.field textarea::placeholder { color: var(--muted); opacity: 0.7; }
+.field-pair { border: 0; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; min-width: 0; }
+.field-pair legend { grid-column: 1 / -1; padding: 0; margin-bottom: 0.35rem; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.field-pair legend span { text-transform: none; letter-spacing: 0; opacity: 0.8; }
+.field-pair .field label { font-size: 0.78rem; }
+@media (max-width: 520px) { .field-pair { grid-template-columns: 1fr; } }
+.photo-tip { color: var(--muted); font-size: 0.92rem; max-width: 40ch; margin-bottom: 1rem !important; }
 .form .btn { justify-self: start; }
 .status { min-height: 1.5em; margin: 0; }
 .hp { position: absolute; left: -9999px; }

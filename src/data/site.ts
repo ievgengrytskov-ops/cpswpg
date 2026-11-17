@@ -18,8 +18,8 @@ export const site = {
   ],
   // Messengers on the main number (owner 2026-11-17)
   messengers: [
-    // pre-filled first message (owner 2026-11-17); the client can edit it before sending
-    { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/12049516379?text=' + encodeURIComponent("Hi! I found you on cpswpg.ca and I'd like a quote.") },
+    // the pre-filled WhatsApp text depends on the page (see topicFor); the client can edit it
+    { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/12049516379' },
     { id: 'viber', label: 'Viber', href: 'viber://chat?number=%2B12049516379' },
   ],
   socials: [
@@ -239,3 +239,27 @@ export const testimonials = [
   { name: 'Gisele Berard', url: 'https://www.google.com/maps/contrib/103512202595325613706/photos/', text: `WOW!! absolutely gorgeous!! The remodeling of our bathroom, was way more than we expected. Giving 20 stars on 5. Igor and his helper were fantastic, professional, respectful, punctual, and great to work with. He knew exactly what I wanted, and was just fabulous to work with. The craftsmanship of their work is just extraordinary, the care and details. We will surely recommend him to friends and family. Will not hesitate to hire him again, in a heartbeat. Beautiful work done in a short period of time at a very reasonable price. I cannot say enough glowing words about him and his work. Thank you so much Igor!!` },
   { name: 'Bala C.', url: 'https://www.google.com/maps/contrib/113521285246626930509/photos/', text: `Very prompt, clean and professional. I hired CPS to install porcelain panel for my bathroom tub surround. Fantastic outcome and we are very happy to recommend to others.` },
 ];
+
+// ---------- Per-page contact context (owner 2026-11-17) ----------
+// Drives the pre-filled WhatsApp message, the default "What do you need?" choice in the form
+// and the heading of the contact block.
+export const services = [
+  'Bathtub surround',
+  'Kitchen backsplash',
+  'Bathtub refinishing',
+  'Full bathroom renovation',
+  'Buying tiles (showroom)',
+  'Other',
+] as const;
+type Topic = { service: (typeof services)[number] | ''; wa: string; heading: [string, string] };
+const hi = "Hi! I found you on cpswpg.ca and ";
+const topics: Record<string, Topic> = {
+  '/bathroom/': { service: 'Bathtub surround', wa: hi + "I'd like a quote for a bathtub surround. I can send photos of my bathroom.", heading: ['Tell us about', 'your bathroom'] },
+  '/kitchen/': { service: 'Kitchen backsplash', wa: hi + "I'd like a quote for a kitchen backsplash. I can send photos of my kitchen.", heading: ['Tell us about', 'your kitchen'] },
+  '/bathtub-repair/': { service: 'Bathtub refinishing', wa: hi + "I'd like a quote for bathtub refinishing. I can send photos of my tub.", heading: ['Tell us about', 'your bathtub'] },
+  '/showroom/': { service: 'Buying tiles (showroom)', wa: hi + "I have a question about your porcelain tiles and the showroom.", heading: ['Ask about', 'our tiles'] },
+  '/porcelain-tiles/': { service: 'Buying tiles (showroom)', wa: hi + "I have a question about large-format porcelain tiles.", heading: ['Ask about', 'porcelain tile'] },
+};
+const defaultTopic: Topic = { service: '', wa: hi + "I'd like a quote. I can send photos.", heading: ['Tell us about', 'your project'] };
+export const topicFor = (path: string): Topic => topics[path] ?? defaultTopic;
+export const whatsappHref = (path: string) => `${site.messengers[0].href}?text=${encodeURIComponent(topicFor(path).wa)}`;
