@@ -219,15 +219,75 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .strip li { scroll-snap-align: start; }
 .strip img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 
-/* ---------- testimonials ---------- */
-.quotes { display: grid; grid-auto-flow: column; grid-auto-columns: min(400px, 86%); gap: 1px; background: var(--line); border: 1px solid var(--line); overflow-x: auto; scroll-snap-type: x mandatory; }
-.quote { scroll-snap-align: start; margin: 0; padding: 2rem 1.8rem; background: var(--panel); display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; }
-.quote blockquote { margin: 0; }
-.quote p { margin: 0; font: 400 1.35rem/1.35 var(--font-head); color: var(--ink); }
-.quote .stars { color: var(--accent); letter-spacing: 0.15em; font-size: 0.9rem; }
-.quote cite { font-style: normal; font-weight: 600; }
-.quote cite a { color: var(--ink); text-decoration: none; }
-.quote cite span { display: block; font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+/* ---------- reviews: rating card + carousel ---------- */
+.reviews-grid { display: grid; grid-template-columns: minmax(260px, 0.75fr) 2fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: stretch; }
+.rating-card {
+  position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start;
+  padding: clamp(1.8rem, 3vw, 2.6rem); border: 1px solid var(--line); border-radius: 20px;
+  background: radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%), var(--panel);
+}
+.rating-card .eyebrow { margin-bottom: 1rem; }
+.rating-score { font: 400 clamp(5rem, 9vw, 7.5rem)/0.85 var(--font-head); color: var(--ink); margin: 0; letter-spacing: -0.03em; }
+.rating-stars { color: var(--accent); font-size: 1.35rem; letter-spacing: 0.2em; margin: 0.8rem 0 0.3rem; }
+.rating-count { color: var(--muted); font-size: 0.95rem; margin: 0; }
+.rating-count b { color: var(--ink); font-weight: 600; }
+.rating-title { font-size: clamp(1.7rem, 2.6vw, 2.2rem); margin: auto 0 1.4rem; padding-top: 2rem; max-width: 14ch; }
+.btn--ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 0.85rem 1.3rem; font-size: 0.95rem; border-radius: 999px; }
+.btn--ghost:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+.carousel { min-width: 0; display: flex; flex-direction: column; gap: 1.2rem; }
+.carousel-track {
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 1.2rem) / 2); column-gap: 1.2rem;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain;
+  scrollbar-width: none; padding: 2px; margin: -2px; flex: 1;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.review {
+  scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; gap: 1rem;
+  padding: clamp(1.5rem, 2.5vw, 2rem); border: 1px solid var(--line); border-radius: 20px; background: var(--panel);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.review:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+.review-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.review-stars { color: var(--accent); letter-spacing: 0.15em; font-size: 0.95rem; }
+.review-mark { font: 400 5rem/0.6 var(--font-head); color: var(--accent); opacity: 0.35; height: 2.2rem; }
+.review-text { margin: 0; flex: 1; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 7; overflow: hidden; }
+.review[data-open] .review-text { display: block; -webkit-line-clamp: unset; }
+.review-text p { margin: 0; font: 400 1.3rem/1.4 var(--font-head); color: var(--ink); }
+.review-more { all: unset; cursor: pointer; align-self: flex-start; color: var(--accent); font-size: 0.9rem; font-weight: 600; }
+.review-more:hover { text-decoration: underline; }
+.review-more:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.review-more[hidden] { display: none; }
+.review-author { display: flex; align-items: center; gap: 0.8rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.review-author a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.review-author a:hover { color: var(--accent); }
+.review-author small { display: block; color: var(--muted); font-size: 0.82rem; }
+.avatar {
+  flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 22%, var(--panel-2)); color: var(--accent);
+  font: 600 0.9rem/1 var(--font-body); letter-spacing: 0.04em;
+}
+.carousel-nav { display: flex; align-items: center; gap: 1rem; }
+.carousel-btn {
+  flex: none; display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 50%;
+  border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; transition: 0.2s;
+}
+.carousel-btn svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.carousel-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.carousel-btn:disabled { opacity: 0.35; cursor: default; }
+.carousel-progress { flex: 1; height: 2px; background: var(--line); overflow: hidden; border-radius: 2px; }
+.carousel-progress span { display: block; height: 100%; width: 50%; background: var(--accent); transition: transform 0.2s; }
+@media (max-width: 960px) {
+  .reviews-grid { grid-template-columns: 1fr; }
+  .rating-card { display: grid; grid-template-columns: auto 1fr; column-gap: 1.5rem; align-items: center; }
+  .rating-card .eyebrow, .rating-title, .rating-card .btn { grid-column: 1 / -1; }
+  .rating-score { grid-row: span 2; }
+  .rating-stars { margin: 0; align-self: end; }
+  .rating-count { align-self: start; }
+  .rating-title { margin: 1.2rem 0 1.2rem; padding-top: 0; max-width: none; }
+}
+@media (max-width: 640px) { .carousel-track { grid-auto-columns: 88%; } }
 
 /* ---------- FAQ ---------- */
 .faq { border-top: 1px solid var(--line); max-width: 860px; }

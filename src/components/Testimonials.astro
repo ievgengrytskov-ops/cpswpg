@@ -1,28 +1,91 @@
 ---
+// Reviews: rating summary on the left, a swipeable carousel of Google reviews on the right.
+// Arrows scroll by one card; long reviews are clamped with a "Read more" toggle.
 import { testimonials, site } from '../data/site';
 const f = site.facts;
+const initials = (name: string) => name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
 ---
-<section class="section" id="testimonials">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div>
-        <span class="eyebrow">Reviews</span>
-        <h2>Rated <em>{f.googleRating.toFixed(1)}</em> by our clients</h2>
-      </div>
-      <p>{f.googleReviews} reviews on Google from homeowners in {site.areaServed}. <a href={site.mapUrl} rel="noopener" target="_blank">Read them all on Google</a></p>
+<section class="section reviews" id="testimonials">
+  <div class="wrap reviews-grid">
+    <div class="rating-card reveal">
+      <span class="eyebrow">Reviews</span>
+      <p class="rating-score">{f.googleRating.toFixed(1)}</p>
+      <p class="rating-stars" aria-label={`${f.googleRating.toFixed(1)} out of 5 stars`}>★★★★★</p>
+      <p class="rating-count">Based on <b>{f.googleReviews} reviews</b> on Google</p>
+      <h2 class="rating-title">What homeowners in <em>{site.areaServed}</em> say</h2>
+      <a class="btn btn--ghost" href={site.mapUrl} rel="noopener" target="_blank">Read all reviews on Google</a>
     </div>
-    <div class="quotes reveal" tabindex="0" role="region" aria-label="Client reviews">
-      {testimonials.map((t) => (
-        <figure class="quote">
-          <blockquote>
-            <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
-            <p>{t.text}</p>
-          </blockquote>
-          <figcaption>
-            <cite><a href={t.url} rel="noopener" target="_blank">{t.name}</a><span>Google review</span></cite>
-          </figcaption>
-        </figure>
-      ))}
+
+    <div class="carousel reveal" data-carousel>
+      <div class="carousel-track" tabindex="0" role="region" aria-label="Client reviews">
+        {testimonials.map((t) => (
+          <figure class="review">
+            <div class="review-top">
+              <span class="review-stars" aria-label="5 out of 5 stars">★★★★★</span>
+              <span class="review-mark" aria-hidden="true">&ldquo;</span>
+            </div>
+            <blockquote class="review-text">
+              <p>{t.text}</p>
+            </blockquote>
+            <button class="review-more" type="button" hidden aria-expanded="false">Read more</button>
+            <figcaption class="review-author">
+              <span class="avatar" aria-hidden="true">{initials(t.name)}</span>
+              <span>
+                <a href={t.url} rel="noopener" target="_blank">{t.name}</a>
+                <small>Google review</small>
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" type="button" data-dir="-1" aria-label="Previous reviews">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        </button>
+        <div class="carousel-progress" aria-hidden="true"><span></span></div>
+        <button class="carousel-btn" type="button" data-dir="1" aria-label="Next reviews">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('.carousel-track')!;
+    const [prev, next] = root.querySelectorAll<HTMLButtonElement>('.carousel-btn');
+    const bar = root.querySelector<HTMLElement>('.carousel-progress span')!;
+
+    const step = () => {
+      const card = track.querySelector<HTMLElement>('.review');
+      return card ? card.offsetWidth + parseFloat(getComputedStyle(track).columnGap || '0') : track.clientWidth;
+    };
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= max - 4;
+      const visible = max > 0 ? track.clientWidth / track.scrollWidth : 1;
+      bar.style.width = `${visible * 100}%`;
+      bar.style.transform = `translateX(${max > 0 ? (track.scrollLeft / max) * (1 / visible - 1) * 100 : 0}%)`;
+    };
+    [prev, next].forEach((b) => b.addEventListener('click', () => {
+      track.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: 'smooth' });
+    }));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    // "Read more" only for reviews that are actually clamped
+    track.querySelectorAll<HTMLElement>('.review').forEach((card) => {
+      const text = card.querySelector<HTMLElement>('.review-text')!;
+      const more = card.querySelector<HTMLButtonElement>('.review-more')!;
+      if (text.scrollHeight > text.clientHeight + 10) more.hidden = false; // > half a line actually hidden
+      more.addEventListener('click', () => {
+        const open = card.toggleAttribute('data-open');
+        more.textContent = open ? 'Show less' : 'Read more';
+        more.setAttribute('aria-expanded', String(open));
+      });
+    });
+  });
+</script>
