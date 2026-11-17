@@ -4,8 +4,8 @@ import Photo from './Photo.astro';
 interface Props { /** Render the heading as the page h1 (on /contact/) */ main?: boolean; }
 const { main = false } = Astro.props;
 const Heading = main ? 'h1' : 'h2';
-const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
-const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || site.form.endpoint;
+const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY || site.form.web3formsKey;
 ---
 <section class="section section--panel" id="contacts">
   <div class="wrap contact-grid">
@@ -27,6 +27,7 @@ const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
     <form class="form" id="contact-form" data-endpoint={endpoint} method="post">
       {w3key && <input type="hidden" name="access_key" value={w3key} />}
       <input type="hidden" name="subject" value="New request from cpswpg.ca" />
+      <input type="hidden" name="from_name" value="cpswpg.ca website" />
       <input class="hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required /></div>
       <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>

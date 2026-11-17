@@ -9,6 +9,9 @@ export const site = {
     'Large-format natural porcelain tile in Winnipeg: showroom, sales and installation of bathtub surrounds and kitchen backsplashes. Call 204 951 6379.',
   // Owner 2026-11-16: public email, also the address for form requests
   email: 'winnipegcps@gmail.com',
+  // Web3Forms access key for winnipegcps@gmail.com (owner 2026-11-17). Public by design: it only
+  // delivers to that inbox. Env vars PUBLIC_FORM_ENDPOINT / PUBLIC_WEB3FORMS_KEY override it.
+  form: { endpoint: 'https://api.web3forms.com/submit', web3formsKey: 'd3acab6f-357b-490d-98b6-cf9bd05ee811' },
   phones: [
     { label: '204 951 6379', href: 'tel:+12049516379' },
     { label: '204 869 6379', href: 'tel:+12048696379' },
