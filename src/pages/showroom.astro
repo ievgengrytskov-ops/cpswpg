@@ -1,11 +1,12 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import { site, showroom, showroomAddress, showroomFullAddress, showroomFaq } from '../data/site';
 import { wp } from '../lib/images';
 
 const phone = site.phones[0];
+const storeImg = await getImage({ src: wp(showroom.photo.image), width: 1200, format: 'jpg' });
 const storeSchema = {
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
@@ -19,6 +20,7 @@ const storeSchema = {
   legalName: showroom.legalName,
   email: site.email,
   url: `${site.url}/showroom/`,
+  image: new URL(storeImg.src, site.url).href,
   telephone: site.phones.map((p) => p.href.replace('tel:', '')),
   address: { '@type': 'PostalAddress', streetAddress: showroom.street, addressLocality: 'Winnipeg', addressRegion: 'MB', postalCode: showroom.postal, addressCountry: 'CA' },
   parentOrganization: { '@id': `${site.url}/#business` },
@@ -33,8 +35,8 @@ const natural = [
 ];
 ---
 <Base
-  title="Large-Format Porcelain Tile Showroom in Winnipeg | Canadian Porcelain Surfaces by CPS"
-  description={`Buy large-format porcelain tile (24×48, 71×36, 47×106), XPS boards and stone veneer at our Winnipeg showroom, ${showroomAddress}. ${showroom.delivery}.`}
+  title="Porcelain Tile Showroom in Winnipeg | Canadian Porcelain Surfaces"
+  description={`Large-format porcelain tile (24×48, 71×36, 47×106), XPS boards and stone veneer at our showroom, ${showroomAddress}. Free delivery on 4+ tiles.`}
   image={showroom.photo.image}
   faq={showroomFaq}
   schema={[storeSchema]}
