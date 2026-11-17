@@ -74,6 +74,7 @@ export const nav: NavItem[] = [
   { label: 'Porcelain Tile', href: '/porcelain-tiles/' },
   { label: 'Showroom', href: '/showroom/' },
   { label: 'Gallery', href: '/gallery/' },
+  { label: 'Guides', href: '/guides/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ];

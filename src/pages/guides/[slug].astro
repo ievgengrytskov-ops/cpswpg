@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Messengers from '../../components/Messengers.astro';
+import { site, navLinks } from '../../data/site';
+import { guides, type Guide } from '../../lib/guides';
+import { wp } from '../../lib/images';
+
+export function getStaticPaths() {
+  return guides.map((g) => ({ params: { slug: g.id }, props: { guide: g } }));
+}
+
+const { guide } = Astro.props as { guide: Guide };
+const { Content } = guide;
+const d = guide.data;
+const minutes = Math.max(1, Math.round(guide.words / 220));
+const fmt = (dt: Date) => dt.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const iso = (dt: Date) => dt.toISOString().slice(0, 10);
+const related = navLinks.find((n) => n.href === d.related);
+const others = guides.filter((g) => g.id !== guide.id);
+const url = `${site.url}/guides/${guide.id}/`;
+const schema = [{
+  '@type': 'Article',
+  '@id': `${url}#article`,
+  headline: d.title,
+  description: d.description,
+  datePublished: iso(d.date),
+  dateModified: iso(d.updated ?? d.date),
+  author: { '@id': `${site.url}/#business` },
+  publisher: { '@id': `${site.url}/#business` },
+  mainEntityOfPage: url,
+  inLanguage: 'en-CA',
+}];
+---
+<Base title={d.seoTitle ?? d.title} description={d.description} image={d.image} crumb={d.title} schema={schema}>
+  <article class="guide">
+    <header class="wrap guide-head">
+      <a class="guide-back" href="/guides/">← All guides</a>
+      <span class="eyebrow">Guide · {minutes} min read</span>
+      <h1>{d.title}</h1>
+      <p class="guide-lead">{d.lead}</p>
+      <p class="guide-meta">By the Canadian Prime Solutions team · <time datetime={iso(d.date)}>{fmt(d.date)}</time></p>
+    </header>
+    <div class="wrap guide-cover">
+      <Image src={wp(d.image)} alt={d.imageAlt} widths={[600, 1000, 1400]} sizes="(max-width: 1240px) 100vw, 1240px" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="wrap guide-body">
+      <div class="prose guide-prose">
+        <Content />
+      </div>
+      <aside class="guide-aside">
+        <div class="guide-card">
+          <span class="eyebrow">Ask us</span>
+          <p>Send a couple of photos and rough wall sizes. We will tell you what we see.</p>
+          <Messengers />
+          <a class="btn" href="#contacts">Get a quote</a>
+          {related && <a class="link-arrow" href={related.href}>{related.label}</a>}
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  {others.length > 0 && (
+    <section class="section section--panel guide-more">
+      <div class="wrap">
+        <div class="section-head"><div><span class="eyebrow">Keep reading</span><h2>More <em>guides</em></h2></div></div>
+        <div class="guide-list">
+          {others.map((g) => (
+            <a class="guide-tile" href={`/guides/${g.id}/`}>
+              <Image src={wp(g.data.image)} alt="" widths={[400, 700]} sizes="(max-width: 760px) 100vw, 400px" />
+              <span class="guide-tile-body"><b>{g.data.title}</b><span>{g.data.lead}</span></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
