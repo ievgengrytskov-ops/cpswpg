@@ -88,6 +88,7 @@ const IMG_RE = /wp-content\/uploads\/(?!elementor\/)[^"'\s)<>,\\]+?\.(?:jpe?g|pn
 // Renders and stock photos that the old site showed among real projects.
 // Owner decision 2026-11-16: not used on the new site. Not downloaded; deleted if present.
 const EXCLUDE = new Set([
+  '2022/12/argo-1.png', // owner 2026-11-16: no longer a partner
   '2022/12/4.jpg',
   '2022/12/6.jpg',
   '2022/12/15.jpg',

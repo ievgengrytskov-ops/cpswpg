@@ -14,7 +14,7 @@ const img = (src: string, alt: string, sizes: string) => {
   return { src: meta, alt, sizes, widths: [...new Set([400, 800].filter((w) => w < top).concat(top))] };
 };
 const trust = [
-  { big: '880+', small: 'projects done' },
+  { big: '1200+', small: 'projects done' },
   { big: `★ ${f.googleRating.toFixed(1)}`, small: `${f.googleReviews} Google reviews` },
   { big: '5 years', small: 'warranty on the tile' },
   { big: '7 days', small: 'a week, showroom open' },
@@ -32,7 +32,7 @@ const cards = [
 ---
 <Base
   title="About Us | Canadian Prime Solutions, Winnipeg"
-  description="Canadian Prime Solutions Inc.: a Winnipeg team for bathtub surrounds, kitchen backsplashes and bathroom renovation, with its own large-format porcelain tile showroom. 880+ projects done."
+  description="Canadian Prime Solutions Inc.: a Winnipeg team for bathtub surrounds, kitchen backsplashes and bathroom renovation, with its own large-format porcelain tile showroom. 1200+ projects done."
   image={teamPhoto.image}
 >
   <PageHero

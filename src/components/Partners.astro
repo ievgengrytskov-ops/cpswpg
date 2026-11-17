@@ -1,22 +1,40 @@
 ---
+// Partners and customers: an endless, slowly scrolling logo strip (pure CSS).
+// The list is rendered twice; the copy is hidden from screen readers. Pauses on hover/focus,
+// and with prefers-reduced-motion it becomes a static, swipeable row.
 import { Image } from 'astro:assets';
 import { partners } from '../data/site';
 import { wp } from '../lib/images';
+
+const logos = partners.map((p) => ({ ...p, meta: wp(p.image) }));
 ---
-<section class="section">
+<section class="section partners-band" aria-labelledby="partners-title">
   <div class="wrap">
     <div class="section-head reveal">
       <div>
         <span class="eyebrow">We are trusted</span>
-        <h2>Partners and <em>customers</em></h2>
+        <h2 id="partners-title">Partners and <em>customers</em></h2>
       </div>
+      <p>Property managers, builders and interior designers who trust our work.</p>
     </div>
-    <ul class="partners reveal">
-      {partners.map((p) => (
-        <li class:list={{ dark: p.dark }}>
-          <Image src={wp(p.image)} alt={p.name} title={p.name} widths={[160, 320]} sizes="160px" format="png" />
-        </li>
+  </div>
+  <div class="marquee reveal">
+    <div class="marquee-track">
+      {[0, 1].map((copy) => (
+        <ul class="marquee-list" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {logos.map((p) => (
+            <li class:list={['logo-card', { dark: p.dark }]}>
+              {p.url ? (
+                <a href={p.url} target="_blank" rel="noopener" tabindex={copy === 1 ? -1 : undefined} aria-label={copy === 1 ? undefined : `${p.name} (opens in a new tab)`}>
+                  <Image src={p.meta} alt="" title={p.name} widths={[180, 360]} sizes="180px" format="png" />
+                </a>
+              ) : (
+                <Image src={p.meta} alt={copy === 1 ? '' : p.name} title={p.name} widths={[180, 360]} sizes="180px" format="png" />
+              )}
+            </li>
+          ))}
+        </ul>
       ))}
-    </ul>
+    </div>
   </div>
 </section>

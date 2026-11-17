@@ -26,7 +26,7 @@ export const site = {
   ogImage: 'cps/25.jpg',
   // Values from the old site (Elementor counters). A counter with value null is not shown.
   stats: [
-    { value: 880 as number | null, suffix: '+', label: 'Projects Done' },
+    { value: 1200 as number | null, suffix: '+', label: 'Projects Done' },
     { value: 99.9 as number | null, suffix: '%', label: 'Client Satisfaction' },
   ],
   // From the Google Business Profile pin (owner-provided link, 2026-11-16).
@@ -204,16 +204,19 @@ export const teamPhoto ={ image: '2025/12/cps-team-building.jpg', alt: 'The Cana
 
 // Logos from the old home page. None of them was a link there.
 // dark: white logo, needs a dark tile
-export const partners = [
-  { name: 'Kinew Housing Inc.', image: '2022/12/eagle-1.png' },
-  { name: 'BBB Accredited Business, A+ rating', image: '2022/12/bbb250-1.png' },
-  { name: 'Best in Winnipeg', image: '2022/12/Best-in-Winnipeg-250x250-1.png' },
-  { name: 'Professional Property Managers Association (PPMA)', image: '2022/12/ppma.png' },
-  { name: 'BUILD', image: '2022/12/Build-Logo250.png', dark: true },
-  { name: 'Purpose Construction', image: '2022/12/Purpose-Horiz-Teal-250.png' },
-  { name: 'Argo Plumbing', image: '2022/12/argo-1.png' },
-  { name: 'Good Karma Interiors Inc.', image: '2022/12/good-1.png' },
-  { name: 'Akman Property Management', image: '2022/12/akman-logo-white.png', dark: true },
+// Logos in src/assets/brand/partners (trimmed copies of the WP files + Globe/Shindico from their sites).
+// url: optional link (opens in a new tab). TODO: link for Best in Winnipeg from the owner
+export const partners: { name: string; image: string; dark?: boolean; url?: string }[] = [
+  { name: 'Kinew Housing Inc.', image: 'brand/partners/kinew.png' },
+  { name: 'BBB Accredited Business, A+ rating', image: 'brand/partners/bbb.png' },
+  { name: 'Best in Winnipeg', image: 'brand/partners/best-in-winnipeg.png' },
+  { name: 'Professional Property Managers Association (PPMA)', image: 'brand/partners/ppma.png' },
+  { name: 'BUILD', image: 'brand/partners/build.png', dark: true },
+  { name: 'Purpose Construction', image: 'brand/partners/purpose.png' },
+  { name: 'Good Karma Interiors Inc.', image: 'brand/partners/good-karma.png' },
+  { name: 'Akman Property Management', image: 'brand/partners/akman.png', dark: true },
+  { name: 'Globe Property Management', image: 'brand/partners/globe.png', dark: true, url: 'https://globepm.ca/' },
+  { name: 'Shindico Realty Inc.', image: 'brand/partners/shindico.png', url: 'https://shindico.com/' },
 ];
 
 export const testimonials = [

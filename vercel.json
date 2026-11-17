@@ -10,7 +10,8 @@
     { "source": "/feed/", "destination": "/", "permanent": true },
     { "source": "/comments/feed/", "destination": "/", "permanent": true },
     { "source": "/wp-login.php", "destination": "/", "permanent": true },
-    { "source": "/wp-admin/:path*", "destination": "/", "permanent": true }
+    { "source": "/wp-admin/:path*", "destination": "/", "permanent": true },
+    { "source": "/wp-content/uploads/:path*", "destination": "/gallery/", "permanent": true }
   ],
   "headers": [
     {
