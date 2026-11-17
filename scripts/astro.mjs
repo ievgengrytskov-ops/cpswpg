@@ -5,12 +5,15 @@
 // Starting Astro with cwd = 'C:\cpswpg' avoids that. On Linux/macOS (Vercel) this changes nothing.
 // Usage (package.json): node scripts/astro.mjs build | dev | preview [...args]
 import { spawn } from 'node:child_process';
-import { realpathSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 
 let cwd = realpathSync.native(process.cwd());
 if (process.platform === 'win32') cwd = cwd.replace(/^[a-z]:/, (d) => d.toUpperCase());
 
-const astroBin = path.join(cwd, 'node_modules', 'astro', 'astro.js');
+// the CLI entry comes from astro's package.json "bin" (it moved between major versions)
+const pkgDir = path.join(cwd, 'node_modules', 'astro');
+const { bin } = JSON.parse(readFileSync(path.join(pkgDir, 'package.json'), 'utf8'));
+const astroBin = path.join(pkgDir, typeof bin === 'string' ? bin : bin.astro);
 const child = spawn(process.execPath, [astroBin, ...process.argv.slice(2)], { cwd, stdio: 'inherit' });
 child.on('exit', (code, signal) => process.exit(signal ? 1 : code ?? 0));
