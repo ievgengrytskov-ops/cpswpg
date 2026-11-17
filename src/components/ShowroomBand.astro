@@ -15,7 +15,7 @@ import { showroom, showroomAddress } from '../data/site';
       <ul class="sizes">
         {showroom.products[0].sizes.map((s) => <li>{s}</li>)}
       </ul>
-      <p class="muted">{showroomAddress} · open {showroom.hours.toLowerCase()}</p>
+      <p class="muted">{showroomAddress} · open {showroom.hours}</p>
       <p class="delivery">{showroom.delivery}</p>
       <div class="ctas">
         <a class="btn" href="/showroom/">Visit the showroom</a>

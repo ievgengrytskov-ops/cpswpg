@@ -9,7 +9,7 @@ const phone = site.phones[0];
 const storeSchema = {
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    dayOfWeek: showroom.days,
     opens: showroom.opens,
     closes: showroom.closes,
   },
