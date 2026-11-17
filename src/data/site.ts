@@ -18,7 +18,8 @@ export const site = {
   ],
   // Messengers on the main number (owner 2026-11-17)
   messengers: [
-    { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/12049516379' },
+    // pre-filled first message (owner 2026-11-17); the client can edit it before sending
+    { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/12049516379?text=' + encodeURIComponent("Hi! I found you on cpswpg.ca and I'd like a quote.") },
     { id: 'viber', label: 'Viber', href: 'viber://chat?number=%2B12049516379' },
   ],
   socials: [
