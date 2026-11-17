@@ -1,0 +1,100 @@
+---
+// Exploded view of a tub-surround wall, drawn in SVG so it follows the site theme.
+// Layers from the wall to the shower side; numbers match the legend below the drawing.
+const layers = [
+  { title: 'Wall studs', text: 'The existing wall framing.' },
+  { title: 'Backer board for wet areas', text: 'DensShield, Kerdi Board or XPS instead of drywall: does not rot, shrink or grow mould.' },
+  { title: 'Taped seams', text: 'Joints covered with fiberglass-mesh tape set in thin-set.' },
+  { title: 'Thin-set mortar', text: 'Bonds the tile to the board.' },
+  { title: 'Natural porcelain tile', text: 'Large format, only 1/4″ thick.' },
+];
+
+// Panel geometry: each layer is a wall panel seen from the front-left.
+const W = 96;              // face width
+const STEP = 110;          // distance between panels
+const X0 = 26;
+const top = (x: number, f: number) => 92 - 40 * f;   // y of the top edge at fraction f of the face
+const bot = (x: number, f: number) => 412 - 40 * f;
+const face = (x: number) => `${x},${top(x, 0)} ${x + W},${top(x, 1)} ${x + W},${bot(x, 1)} ${x},${bot(x, 0)}`;
+const edge = (x: number, t: number) => `${x + W},${top(x, 1)} ${x + W + t},${top(x, 1) + 3} ${x + W + t},${bot(x, 1) + 3} ${x + W},${bot(x, 1)}`;
+const band = (x: number, f1: number, f2: number) => `${x + W * f1},${top(x, f1)} ${x + W * f2},${top(x, f2)} ${x + W * f2},${bot(x, f2)} ${x + W * f1},${bot(x, f1)}`;
+const xs = [0, 1, 2, 3].map((i) => X0 + i * STEP); // studs, backer (with tape), thin-set, tile
+const [xStud, xBack, xSet, xTile] = xs;
+// marker positions (number badges)
+const markers = [
+  { n: 1, x: xStud + W / 2, y: 30 },
+  { n: 2, x: xBack + W * 0.2, y: 22 },
+  { n: 3, x: xBack + W * 0.72, y: 10 },
+  { n: 4, x: xSet + W / 2, y: 30 },
+  { n: 5, x: xTile + W / 2, y: 30 },
+];
+---
+<figure class="layers-fig">
+  <svg class="layers-svg" viewBox="0 0 470 450" role="img" aria-labelledby="layers-title layers-desc">
+    <title id="layers-title">Layers of a tub surround wall</title>
+    <desc id="layers-desc">From the wall to the shower: wall studs, a backer board for wet areas with taped seams, thin-set mortar and the porcelain tile.</desc>
+    <defs>
+      <pattern id="lt-mesh" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <path d="M0 0H6M0 0V6" stroke="#f1ebe3" stroke-width="0.8" opacity="0.75" />
+      </pattern>
+      <pattern id="lt-trowel" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-22)">
+        <rect width="7" height="7" fill="#b7aea2" />
+        <rect width="7" height="3" fill="#9a9184" />
+      </pattern>
+      <clipPath id="lt-tile-clip"><polygon points={face(xTile)} /></clipPath>
+      <linearGradient id="lt-tile" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fbf9f6" /><stop offset="1" stop-color="#e9e4dc" />
+      </linearGradient>
+      <linearGradient id="lt-board" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#9aa6ae" /><stop offset="1" stop-color="#7d8991" />
+      </linearGradient>
+    </defs>
+
+    <!-- 1. studs -->
+    <polygon points={face(xStud)} fill="var(--panel-2)" stroke="var(--line)" />
+    <polygon points={edge(xStud, 14)} fill="var(--line)" />
+    <polygon points={band(xStud, 0.14, 0.3)} fill="#a8865a" opacity="0.85" />
+    <polygon points={band(xStud, 0.66, 0.82)} fill="#a8865a" opacity="0.85" />
+
+    <!-- 2. backer board + 3. taped seam -->
+    <polygon points={face(xBack)} fill="url(#lt-board)" />
+    <polygon points={edge(xBack, 7)} fill="#66727a" />
+    {[0.12, 0.88].flatMap((f) => [0.18, 0.42, 0.66, 0.9].map((v) => (
+      <circle cx={xBack + W * f} cy={top(0, f) + (bot(0, f) - top(0, f)) * v} r="1.8" fill="#4d575e" />
+    )))}
+    <polygon points={band(xBack, 0.62, 0.82)} fill="url(#lt-mesh)" stroke="#f1ebe3" stroke-opacity="0.5" stroke-width="0.6" />
+
+    <!-- 4. thin-set -->
+    <polygon points={face(xSet)} fill="url(#lt-trowel)" />
+    <polygon points={edge(xSet, 4)} fill="#8a8276" />
+
+    <!-- 5. porcelain tile -->
+    <polygon points={face(xTile)} fill="url(#lt-tile)" />
+    <g clip-path="url(#lt-tile-clip)" fill="none" stroke-linecap="round">
+      <path d={`M${xTile - 6} ${150} C ${xTile + 30} ${170}, ${xTile + 40} ${230}, ${xTile + 70} ${250} S ${xTile + 95} ${300}, ${xTile + 110} ${310}`} stroke="#b9b1a6" stroke-width="1.6" />
+      <path d={`M${xTile + 40} ${215} C ${xTile + 55} ${200}, ${xTile + 70} ${190}, ${xTile + 104} ${150}`} stroke="#c9a46a" stroke-width="1.1" />
+      <path d={`M${xTile + 8} ${330} C ${xTile + 30} ${320}, ${xTile + 50} ${345}, ${xTile + 80} ${330}`} stroke="#cfc8be" stroke-width="1" />
+    </g>
+    <polygon points={face(xTile)} fill="none" stroke="#d8d0c5" />
+    <polygon points={edge(xTile, 5)} fill="#d6cfc5" />
+
+    <!-- direction -->
+    <g class="layers-axis">
+      <line x1={X0} y1="440" x2={xTile + W + 4} y2="440" stroke="var(--line)" />
+      <path d={`M${xTile + W - 2} 436 l6 4 -6 4`} fill="none" stroke="var(--line)" />
+      <text x={X0} y="432">WALL</text>
+      <text x={xTile + W + 4} y="432" text-anchor="end">SHOWER SIDE</text>
+    </g>
+
+    <!-- number badges -->
+    {markers.map((m) => (
+      <g class="layers-badge">
+        <circle cx={m.x} cy={m.y} r="11" />
+        <text x={m.x} y={m.y + 4} text-anchor="middle">{m.n}</text>
+      </g>
+    ))}
+  </svg>
+  <ol class="layers-legend">
+    {layers.map((l) => <li><b>{l.title}</b><span>{l.text}</span></li>)}
+  </ol>
+</figure>

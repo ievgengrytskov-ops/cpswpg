@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import Faq from '../components/Faq.astro';
+import WallLayers from '../components/WallLayers.astro';
 import { site, beforeAfter } from '../data/site';
 import { wp } from '../lib/images';
 
@@ -181,8 +182,8 @@ const schema = [{
         <p class="muted">The tiles sit on a backer board made for wet areas instead of drywall or plywood. Boards such as DensShield, Kerdi Board and XPS do not rot, shrink or grow mould. Porcelain over a proper backer is one of the most durable wall surfaces you can have.</p>
         <p class="muted">We also sell XPS boards (60″ × 36″ × 1/2″) at our showroom.</p>
       </div>
-      <div class="reveal diagram-img">
-        <Image {...img('2022/12/20.png', 'Diagram of a tub surround: backer board, joint tape, thin-set mortar, porcelain tile and plumbing', '(max-width: 860px) 100vw, 560px')} />
+      <div class="reveal">
+        <WallLayers />
       </div>
     </div>
   </section>

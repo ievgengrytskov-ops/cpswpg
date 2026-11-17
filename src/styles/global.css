@@ -159,8 +159,17 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .photo-row figcaption { color: var(--muted); font-size: 0.88rem; margin-top: 0.5rem; }
 .photo-row figure { margin: 0; }
 @media (max-width: 640px) { .photo-row { grid-template-columns: 1fr; } }
-.diagram-img { background: #fff; padding: 1rem; }
-.diagram-img img { width: 100%; height: auto; max-height: none; object-fit: contain; }
+/* wall layers diagram (bathroom page) */
+.layers-fig { margin: 0; padding: clamp(1.2rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: 20px; background: var(--panel); }
+.layers-svg { display: block; width: 100%; height: auto; max-height: 460px; }
+.layers-axis text { font: 600 10px/1 var(--font-body); letter-spacing: 0.18em; fill: var(--muted); }
+.layers-badge circle { fill: var(--accent); }
+.layers-badge text { font: 700 12px/1 var(--font-body); fill: var(--on-accent); }
+.layers-legend { list-style: none; counter-reset: layer; margin: 1.4rem 0 0; padding: 1.2rem 0 0; border-top: 1px solid var(--line); display: grid; gap: 0.7rem; }
+.layers-legend li { counter-increment: layer; display: grid; grid-template-columns: 1.6rem 1fr; column-gap: 0.7rem; font-size: 0.95rem; line-height: 1.45; }
+.layers-legend li::before { content: counter(layer); grid-row: span 2; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; border: 1px solid var(--accent); color: var(--accent); font-size: 0.8rem; font-weight: 700; }
+.layers-legend b { font-weight: 600; color: var(--ink); }
+.layers-legend span { color: var(--muted); }
 @media (max-width: 860px) { .hero { grid-template-columns: 1fr; min-height: 0; } .hero-photo { order: -1; min-height: 0; aspect-ratio: 4 / 3; } .hero-photo::after { background: linear-gradient(0deg, var(--bg) 0%, transparent 30%); } }
 
 /* ---------- trust strip ---------- */
@@ -417,7 +426,6 @@ p { margin: 0 0 1em; max-width: 66ch; }
 /* photos inside the text: portrait shots are capped so they don't fill several screens */
 .prose .ph { margin: 1.8rem 0 2.2rem; }
 .prose img.ph, .prose .ph img { max-height: min(640px, 80vh); width: auto; max-width: 100%; }
-.prose .ph.diagram, .prose .ph.diagram img { background: #fff; padding: 0.5rem; }
 .ph figcaption { font-size: 0.8rem; color: var(--accent); margin-top: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; }
 .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; margin: 1.8rem 0 2.2rem; }
 .pair--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
