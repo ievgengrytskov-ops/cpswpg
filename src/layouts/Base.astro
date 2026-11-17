@@ -180,6 +180,7 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
             <h2>Follow</h2>
             <ul>
               {site.socials.map((s) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}
+              <li><a href={site.reviewUrl} rel="noopener" target="_blank">★ Leave us a review</a></li>
             </ul>
           </div>
         </div>

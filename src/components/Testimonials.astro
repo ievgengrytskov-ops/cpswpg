@@ -13,7 +13,10 @@ const initials = (name: string) => name.split(/\s+/).map((w) => w[0]).join('').s
       <p class="rating-stars" aria-label={`${f.googleRating.toFixed(1)} out of 5 stars`}>★★★★★</p>
       <p class="rating-count">Based on <b>{f.googleReviews} reviews</b> on Google</p>
       <h2 class="rating-title">What homeowners in <em>{site.areaServed}</em> say</h2>
-      <a class="btn btn--ghost" href={site.mapUrl} rel="noopener" target="_blank">Read all reviews on Google</a>
+      <div class="rating-ctas">
+        <a class="btn" href={site.reviewUrl} rel="noopener" target="_blank">Leave us a review</a>
+        <a class="link-arrow" href={site.mapUrl} rel="noopener" target="_blank">Read all reviews</a>
+      </div>
     </div>
 
     <div class="carousel reveal" data-carousel>
