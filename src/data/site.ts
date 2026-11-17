@@ -35,6 +35,8 @@ export const site = {
   geo: { lat: 49.7988439, lng: -97.1597431 },
   mapUrl: 'https://www.google.com/maps?cid=1818885901365916689',
   areaServed: 'Winnipeg',
+  // Office hours from the Google Business Profile (owner screenshot 2026-11-16). The showroom has its own hours (showroom.hours)
+  hours: { text: 'Mon–Fri 9 am – 5 pm', days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '17:00' },
   // Confirmed by the owner 2026-11-16
   facts: {
     googleRating: 5.0,

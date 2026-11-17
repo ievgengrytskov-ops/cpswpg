@@ -65,6 +65,7 @@ const graph: Record<string, unknown>[] = [
     },
     geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
     hasMap: site.mapUrl,
+    openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: site.hours.days, opens: site.hours.opens, closes: site.hours.closes },
     areaServed: { '@type': 'City', name: site.areaServed },
     sameAs: site.socials.map((s) => s.href),
   },
@@ -160,6 +161,7 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
               {site.phones.map((p) => <li><a class="foot-big" href={p.href}>{p.label}</a></li>)}
               <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
               <li><a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a></li>
+              <li>Office: {site.hours.text}</li>
             </ul>
           </div>
           <div>

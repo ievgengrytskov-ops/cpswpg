@@ -17,6 +17,7 @@ const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
         {site.phones.map((p) => <li><a class="contact-phone" href={p.href}>{p.label}</a></li>)}
         <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
         <li><a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a></li>
+        <li>Office hours: {site.hours.text}</li>
       </ul>
       <ul class="contact-list contact-socials">
         {site.socials.map((s) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}
