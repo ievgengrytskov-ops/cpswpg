@@ -109,7 +109,13 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
     <link rel="icon" href="/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#151413" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      // .js for reveal animations; saved theme is applied before first paint (dark is the default)
+      (function () {
+        var d = document.documentElement; d.classList.add('js');
+        try { if (localStorage.getItem('theme') === 'light') { d.dataset.theme = 'light'; document.querySelector('meta[name=theme-color]').content = '#f7f3ee'; } } catch (e) {}
+      })();
+    </script>
     <meta name="geo.region" content="CA-MB" />
     <meta name="geo.placename" content={site.address.city} />
     <meta property="og:type" content="website" />

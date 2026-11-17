@@ -31,6 +31,10 @@ const phone = site.phones[0];
     <div class="hdr-cta">
       <a class="hdr-tel" href={phone.href}>{phone.label}</a>
       <a class="btn" href="#contacts">Get a quote</a>
+      <button class="theme-btn" type="button" aria-label="Switch to light theme" title="Light / dark theme">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+      </button>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     </div>
   </div>
@@ -48,6 +52,23 @@ const phone = site.phones[0];
   };
   btn.addEventListener('click', () => set(!hdr.hasAttribute('data-open')));
   hdr.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', () => set(false)));
+
+  // Light / dark theme toggle (initial theme is set inline in <head>)
+  const themeBtn = hdr.querySelector<HTMLButtonElement>('.theme-btn')!;
+  const meta = document.querySelector<HTMLMetaElement>('meta[name=theme-color]');
+  const syncLabel = () => {
+    const light = document.documentElement.dataset.theme === 'light';
+    themeBtn.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    if (meta) meta.content = light ? '#f7f3ee' : '#151413';
+  };
+  syncLabel();
+  themeBtn.addEventListener('click', () => {
+    const light = document.documentElement.dataset.theme !== 'light';
+    if (light) document.documentElement.dataset.theme = 'light';
+    else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch {}
+    syncLabel();
+  });
 
   // Reveal sections on scroll. Content is visible without JS; .js is set in <head>.
   const io = new IntersectionObserver(
