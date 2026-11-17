@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Contact from '../components/Contact.astro';
+import { site, fullAddress } from '../data/site';
+const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(`${site.name}, ${fullAddress}`)}&z=15&output=embed`;
+---
+<Base
+  title="Contact Us | Canadian Prime Solutions, Winnipeg"
+  description={`Contact Canadian Prime Solutions in Winnipeg for bathtub surrounds, kitchen backsplashes and bathroom renovation. Call ${site.phones[0].label} or send us a message.`}
+  contact={false}
+>
+  <Contact main />
+  <section class="section">
+    <div class="wrap">
+      <h2>Find Us</h2>
+      <p><a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a>. We serve homeowners across {site.areaServed} and the surrounding area.</p>
+      <div class="map">
+        <iframe src={mapSrc} title={`Map: ${site.name}, ${fullAddress}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+</Base>

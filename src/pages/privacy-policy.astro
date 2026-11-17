@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, fullAddress } from '../data/site';
+// TODO: owner should review this text (form provider name, analytics).
+const updated = 'November 16, 2026';
+---
+<Base title="Privacy Policy | Canadian Prime Solutions" description="How Canadian Prime Solutions Inc. collects, uses and protects personal information submitted through cpswpg.ca." crumb="Privacy Policy">
+  <div class="wrap page-head"><h1>Privacy Policy</h1></div>
+  <div class="wrap" style="padding-bottom:3rem">
+    <div class="prose">
+      <p><em>Last updated: {updated}</em></p>
+      <p>{site.name} ("we", "us") respects your privacy. This policy explains what personal information we collect through cpswpg.ca and how we use it, in line with Canada's Personal Information Protection and Electronic Documents Act (PIPEDA).</p>
+
+      <h2>Information we collect</h2>
+      <ul>
+        <li><strong>Contact form:</strong> your name, email address, phone number and message, when you send us a request.</li>
+        <li><strong>Phone and email:</strong> the details you share when you contact us directly.</li>
+        <li><strong>Website usage:</strong> anonymous statistics such as pages visited, device type and approximate location, collected with Google Analytics using cookies.</li>
+      </ul>
+
+      <h2>How we use it</h2>
+      <p>We use your information only to answer your request, prepare an estimate, schedule and complete work, and improve our website. We do not sell or rent your personal information.</p>
+
+      <h2>Who we share it with</h2>
+      <p>Form submissions are delivered to us by a third-party form service, and website statistics are processed by Google. These providers may store data outside Canada. We do not share your information with anyone else unless required by law.</p>
+
+      <h2>Cookies</h2>
+      <p>Google Analytics uses cookies to measure how the site is used. You can block or delete cookies in your browser settings; the website will still work.</p>
+
+      <h2>How long we keep it</h2>
+      <p>We keep your information only as long as needed for the purposes above or as required by law.</p>
+
+      <h2>Your rights</h2>
+      <p>You can ask to see, correct or delete the personal information we hold about you, or withdraw your consent, by contacting us.</p>
+
+      <h2>Contact us</h2>
+      <p>{site.name}<br />{fullAddress}<br />Phone: <a href={site.phones[0].href}>{site.phones[0].label}</a><br />Email: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </div>
+</Base>

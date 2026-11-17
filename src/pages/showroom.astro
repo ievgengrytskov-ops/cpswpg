@@ -1,0 +1,163 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { site, showroom, showroomAddress, showroomFullAddress, showroomFaq } from '../data/site';
+import { wp } from '../lib/images';
+
+const phone = site.phones[0];
+const storeSchema = {
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    opens: showroom.opens,
+    closes: showroom.closes,
+  },
+  '@type': 'Store',
+  '@id': `${site.url}/showroom/#store`,
+  name: showroom.name,
+  legalName: showroom.legalName,
+  email: site.email,
+  url: `${site.url}/showroom/`,
+  telephone: site.phones.map((p) => p.href.replace('tel:', '')),
+  address: { '@type': 'PostalAddress', streetAddress: showroom.street, addressLocality: 'Winnipeg', addressRegion: 'MB', postalCode: showroom.postal, addressCountry: 'CA' },
+  parentOrganization: { '@id': `${site.url}/#business` },
+  description: 'Large-format natural porcelain tile, XPS boards and stone veneer.',
+};
+const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(showroomFullAddress)}&z=15&output=embed`;
+const natural = [
+  { title: 'Natural clay and minerals', text: 'Made from fine kaolin clay with quartz and feldspar, pressed and fired at over 1,200 °C.' },
+  { title: 'Almost no water absorption', text: 'Porcelain absorbs 0.5% of water or less, so it suits showers, tub surrounds and backsplashes.' },
+  { title: 'Colour that lasts', text: 'The colour does not change over time, and the surface resists scratches, chips and stains.' },
+  { title: 'Thin and light', text: 'At 1/4″ the tiles weigh far less than traditional tile and can often go over existing tile.' },
+];
+---
+<Base
+  title="Large-Format Porcelain Tile Showroom in Winnipeg | Canadian Porcelain Surfaces by CPS"
+  description={`Buy large-format porcelain tile (24×48, 71×36, 47×106), XPS boards and stone veneer at our Winnipeg showroom, ${showroomAddress}. ${showroom.delivery}.`}
+  image={showroom.photo.image}
+  faq={showroomFaq}
+  schema={[storeSchema]}
+>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>
+        <span class="h1-kicker">{showroom.name} · {showroomAddress}</span>
+        Large-format porcelain tile <em>in Winnipeg</em>
+      </h1>
+      <p class="lead">Come and see full-size tiles at our new showroom. We sell large-format porcelain tile, XPS boards and stone veneer, for your own project or with our installation.</p>
+      <div class="ctas">
+        <a class="btn" href={phone.href}>Call {phone.label}</a>
+        <a class="link-arrow" href={showroom.mapUrl} rel="noopener" target="_blank">Get directions</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <Image src={wp(showroom.photo.image)} alt={showroom.photo.alt} widths={[600, 1000]} sizes="(max-width: 860px) 100vw, 55vw" loading="eager" fetchpriority="high" />
+      <div class="stamp"><b>Free delivery</b>in Winnipeg on 4+ tiles</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">What we sell</span>
+          <h2>Tiles, boards and <em>stone veneer</em></h2>
+        </div>
+        <p>{showroom.delivery}.</p>
+      </div>
+      <div class="products reveal">
+        {showroom.products.map((p) => (
+          <article class="product">
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+            {p.sizes.length > 0 && <ul class="sizes">{p.sizes.map((s) => <li>{s}</li>)}</ul>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Collections</span>
+          <h2>Our <em>collections</em></h2>
+        </div>
+        <p>Large-format natural porcelain, 6 mm (about 1/4″) thick.</p>
+      </div>
+      <div class="collections reveal">
+        {showroom.collections.map((c) => (
+          <article class="collection">
+            <header>
+              <h3>{c.name}</h3>
+              <p class="collection-size"><b>{c.size}</b> {c.metric} · {c.count} designs</p>
+            </header>
+            {c.designs.length > 0 ? (
+              <ul class="designs">
+                {c.designs.map((d) => <li><span>{d.code}</span>{d.name}</li>)}
+              </ul>
+            ) : (
+              <p class="muted">{c.note}</p>
+            )}
+          </article>
+        ))}
+      </div>
+      <div class="viz reveal">
+        {showroom.visuals.map((v) => (
+          <Photo src={v.image} alt={v.alt} caption={v.caption} sizes="(max-width: 700px) 100vw, 560px" max={1080} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">A natural product</span>
+          <h2>The look of stone, made from <em>natural clay</em></h2>
+        </div>
+        <a class="link-arrow" href="/porcelain-tiles/">More about porcelain tile</a>
+      </div>
+      <ol class="steps reveal plain">
+        {natural.map((n) => <li><h3>{n.title}</h3><p>{n.text}</p></li>)}
+      </ol>
+      <div class="samples reveal">
+        {showroom.samples.map((s) => <Photo src={s.image} alt={s.alt} sizes="(max-width: 700px) 50vw, 240px" max={600} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap contact-grid">
+      <div class="reveal">
+        <span class="eyebrow">Visit us</span>
+        <h2>{showroom.street}</h2>
+        <p class="muted">{showroom.city}</p>
+        <p class="hours"><span class="eyebrow">Opening hours</span>{showroom.hours}</p>
+        <ul class="contact-list">
+          {site.phones.map((p) => <li><a class="contact-phone" href={p.href}>{p.label}</a></li>)}
+        </ul>
+      </div>
+      <div class="map reveal">
+        <iframe src={mapSrc} title={`Map: showroom at ${showroomAddress}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Buying <em>porcelain tile</em></h2>
+      </div>
+      <div class="faq reveal">
+        {showroomFaq.map((q) => (
+          <details><summary>{q.q}</summary><div><p>{q.a}</p></div></details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

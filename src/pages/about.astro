@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import YouTube from '../components/YouTube.astro';
+import Partners from '../components/Partners.astro';
+import { site, homeServices, teamPhoto, showroom } from '../data/site';
+import { wp } from '../lib/images';
+
+const f = site.facts;
+const img = (src: string, alt: string, sizes: string) => {
+  const meta = wp(src);
+  const top = Math.min(1200, meta.width);
+  return { src: meta, alt, sizes, widths: [...new Set([400, 800].filter((w) => w < top).concat(top))] };
+};
+const trust = [
+  { big: '880+', small: 'projects done' },
+  { big: `★ ${f.googleRating.toFixed(1)}`, small: `${f.googleReviews} Google reviews` },
+  { big: '5 years', small: 'warranty on the tile' },
+  { big: '7 days', small: 'a week, showroom open' },
+];
+const values = [
+  { title: 'Attention to detail', text: 'Careful planning, clear timelines and close project management. We keep an eye on the calendar and on your budget.' },
+  { title: 'Fair prices', text: 'Competitive, honest prices and no surprise bills. Any extra cost is approved by you in advance.' },
+  { title: 'Good materials', text: 'We work with well-known suppliers of finishing materials and fixtures, and choose modern, environmentally friendly products.' },
+  { title: 'Client first', text: 'We advise you on the best methods and help you choose the right materials for your home and budget.' },
+];
+const cards = [
+  ...homeServices.slice(0, 3),
+  { title: 'Porcelain Tile Showroom', href: '/showroom/', image: showroom.photo.image, alt: showroom.photo.alt, text: 'Large-format porcelain tile, XPS boards and stone veneer for sale.' },
+];
+---
+<Base
+  title="About Us | Canadian Prime Solutions, Winnipeg"
+  description="Canadian Prime Solutions Inc.: a Winnipeg team for bathtub surrounds, kitchen backsplashes and bathroom renovation, with its own large-format porcelain tile showroom. 880+ projects done."
+  image={teamPhoto.image}
+>
+  <PageHero
+    kicker="About Canadian Prime Solutions"
+    lead="Whether you live in a house, condominium or apartment, we make home improvement smooth and easy: from a new bathtub surround to a full renovation, with our own porcelain tile showroom."
+    image={teamPhoto.image}
+    alt={teamPhoto.alt}
+  >
+    <Fragment slot="title">A Winnipeg team for <em>bathrooms and kitchens</em></Fragment>
+  </PageHero>
+
+  <div class="trust">
+    {trust.map((t) => <div><b>{t.big}</b><span>{t.small}</span></div>)}
+  </div>
+
+  <section class="section">
+    <div class="wrap duo">
+      <div class="reveal">
+        <span class="eyebrow">Our team</span>
+        <h2>Fresh ideas, <em>experienced hands</em></h2>
+        <p class="muted">Our team brings together young specialists with new ideas for interiors and experienced, highly skilled installers. We work as one crew, from the first visit to the final clean-up.</p>
+        <p class="muted">Every project is organized around what you need: we follow building standards, keep to the plan and react quickly when something in the design changes.</p>
+      </div>
+      <div class="reveal">
+        <Image {...img('cps/17.jpg', 'Marble-look porcelain shower wall with a matte black shower system', '(max-width: 860px) 100vw, 560px')} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">How we work</span>
+          <h2>What you can <em>count on</em></h2>
+        </div>
+      </div>
+      <ol class="steps reveal plain">
+        {values.map((v) => <li><h3>{v.title}</h3><p>{v.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">What we do</span>
+          <h2>Services and <em>showroom</em></h2>
+        </div>
+      </div>
+      <div class="cards reveal">
+        {cards.map((c) => (
+          <a class="card" href={c.href}>
+            <Image {...img(c.image, c.alt, '(max-width: 540px) 100vw, (max-width: 1000px) 50vw, 310px')} />
+            <div class="card-body"><h3>{c.title}</h3><p>{c.text}</p></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap about">
+      <div class="reveal">
+        <span class="eyebrow">Our goal</span>
+        <h2>We always try to do <em>more than expected</em></h2>
+        <p class="muted">We want to be your experienced, dependable partner through the whole project: we advise you on the best methods, help you choose from a wide range of materials and make sure you are happy with the result.</p>
+        <a class="link-arrow" href="#contacts">Start your project</a>
+      </div>
+      <div class="reveal">
+        <YouTube id={site.videos.goals} title="Canadian Prime Solutions project video" />
+      </div>
+    </div>
+  </section>
+
+  <Partners />
+</Base>

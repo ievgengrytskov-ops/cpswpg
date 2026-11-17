@@ -1,0 +1,41 @@
+---
+// Responsive image from src/assets/wp: webp in several widths, real width/height (no layout shift).
+import { Image } from 'astro:assets';
+import { wp } from '../lib/images';
+
+interface Props {
+  /** Path inside src/assets/wp, e.g. '2022/12/5.jpg' */
+  src: string;
+  alt: string;
+  caption?: string;
+  /** CSS sizes attribute; default fits the article column */
+  sizes?: string;
+  /** Largest width to generate */
+  max?: number;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+}
+const {
+  src,
+  alt,
+  caption,
+  sizes = '(max-width: 820px) 100vw, 760px',
+  max = 1600,
+  loading = 'lazy',
+  fetchpriority,
+  class: cls,
+} = Astro.props;
+const meta = wp(src);
+const top = Math.min(max, meta.width);
+const widths = [...new Set([400, 800, 1200, 1600].filter((w) => w < top).concat(top))];
+const img = { src: meta, alt, widths, sizes, loading, fetchpriority, decoding: 'async' as const };
+---
+{caption ? (
+  <figure class:list={['ph', cls]}>
+    <Image {...img} />
+    <figcaption>{caption}</figcaption>
+  </figure>
+) : (
+  <Image {...img} class:list={['ph', cls]} />
+)}

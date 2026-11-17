@@ -1,0 +1,136 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Faq from '../components/Faq.astro';
+import { site, showroom, showroomAddress } from '../data/site';
+import { wp } from '../lib/images';
+
+const img = (src: string, alt: string, sizes: string) => {
+  const meta = wp(src);
+  const top = Math.min(1200, meta.width);
+  return { src: meta, alt, sizes, widths: [...new Set([400, 800].filter((w) => w < top).concat(top))] };
+};
+const sizes = [
+  { big: '24″ × 48″', small: '1/4″ thick' },
+  { big: '71″ × 36″', small: '1/4″ thick' },
+  { big: '47″ × 106″', small: '1/4″ thick' },
+  { big: 'More', small: 'other sizes on request' },
+];
+const uses = [
+  { title: 'Bathtub surrounds', href: '/bathroom/', image: 'cps/38.jpg', alt: 'Bathtub surround with grey marble-look porcelain tiles', text: 'Often one tile per wall.' },
+  { title: 'Showers', href: '/bathroom/', image: 'cps/23.jpg', alt: 'Walk-in shower with grey marble-look porcelain walls and a built-in niche', text: 'Walk-in and tub showers.' },
+  { title: 'Kitchen backsplashes', href: '/kitchen/', image: 'cps/35.jpg', alt: 'Kitchen with white cabinets and a marble-look porcelain backsplash', text: 'One stone look behind the counter.' },
+  { title: 'Feature walls', href: '/gallery/', image: 'cps/33.jpg', alt: 'Media wall with a fireplace and black marble-look porcelain', text: 'Fireplaces and media walls.' },
+];
+const properties = [
+  'Scratch and chip resistant',
+  'Stain resistant and hygienic',
+  'Withstands heat',
+  'Absorbs 0.5% of water or less',
+  'Colour does not change over time',
+  'Polished finish with a luxurious stone look',
+];
+const install = [
+  'Very few joints and much less grout',
+  'Light enough to go over old ceramic tile, with the right preparation',
+  'No dust and dirt from tearing out old tile',
+  'Faster to install than hundreds of small tiles',
+];
+const faq = [
+  { q: 'Is porcelain tile a natural material?', a: 'Yes. It is made from natural kaolin clay, quartz and feldspar, pressed under high pressure and fired at over 1,200 °C. There is no plastic or resin in it.' },
+  { q: 'What is the difference between porcelain and ceramic tile?', a: 'Porcelain is made from a finer, purer clay and fired at a higher temperature (2,200–2,500 °F). That makes it denser and harder: by the ASTM definition, porcelain absorbs 0.5% of water or less.' },
+  { q: 'Can it go over my old tile?', a: 'Often, yes. At 1/4″ the tiles are thin and light, so they can be installed over existing ceramic tile when it is solid and properly prepared.' },
+  { q: 'Is it hard to cut?', a: 'Porcelain is dense and needs an experienced tile setter. A wet tile saw is the recommended tool. If you buy tiles for your own project, ask us for advice.' },
+  { q: 'How do I clean it?', a: 'Damp-mop or wipe with a mild soap solution. The grout lines should be sealed from time to time against stains and mildew.' },
+  { q: 'Where can I see the tiles?', a: `At our showroom, ${showroomAddress}, open ${showroom.hours.toLowerCase()}.` },
+];
+---
+<Base
+  title="Large-Format Natural Porcelain Tile 47×106, 71×36, 24×48 | Canadian Prime Solutions"
+  description="Large-format natural porcelain tile in Winnipeg: 24×48, 71×36 and 47×106 inches, only 1/4″ thick. Marble, onyx and stone looks for bathtub surrounds, showers, backsplashes and walls."
+  image="2022/12/1-3.jpg"
+  crumb="Porcelain Tile"
+  faq={faq}
+>
+  <PageHero
+    kicker="Large-format porcelain tile"
+    lead="Made from fine clay and minerals, pressed and fired at over 1,200 °C. Tiles up to 47″ × 106″ and only 1/4″ thick, with the look of marble, onyx and stone."
+    image="2022/12/1-3.jpg"
+    alt="Showroom wall with four large porcelain tile designs"
+    primary={{ label: 'Visit the showroom', href: '/showroom/' }}
+    secondary={{ label: 'Get an installation quote', href: '#contacts' }}
+  >
+    <Fragment slot="title">Natural porcelain in <em>very large tiles</em></Fragment>
+  </PageHero>
+
+  <div class="trust">
+    {sizes.map((s) => <div><b>{s.big}</b><span>{s.small}</span></div>)}
+  </div>
+
+  <section class="section section--panel">
+    <div class="wrap duo">
+      <div class="reveal">
+        <span class="eyebrow">A natural product</span>
+        <h2>Clay, minerals <em>and fire</em></h2>
+        <p class="muted">Porcelain tile is made from fine kaolin clay with quartz and feldspar. The mix is pressed into thin tiles under high pressure and fired at over 1,200 °C. The result is a dense, fine-grained material that absorbs almost no water.</p>
+        <p class="muted">China, India and Europe have made large porcelain tiles for years, and they are now popular in North America. The large format opens up designs that small tiles cannot: a whole wall of marble with almost no joints.</p>
+        <a class="link-arrow" href="/showroom/">See our collections</a>
+      </div>
+      <div class="reveal">
+        <div class="samples" style="grid-template-columns:repeat(2,1fr);margin:0">
+          {showroom.samples.slice(0, 4).map((s) => <Photo src={s.image} alt={s.alt} sizes="(max-width: 860px) 50vw, 280px" max={600} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Where to use it</span>
+          <h2>Bathrooms, kitchens <em>and walls</em></h2>
+        </div>
+      </div>
+      <div class="cards reveal">
+        {uses.map((u) => (
+          <a class="card" href={u.href}>
+            <Image {...img(u.image, u.alt, '(max-width: 540px) 100vw, (max-width: 1000px) 50vw, 310px')} />
+            <div class="card-body"><h3>{u.title}</h3><p>{u.text}</p></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Properties</span>
+          <h2>Built for <em>wet rooms</em></h2>
+        </div>
+        <p>Thin and light, yet harder and less porous than ceramic tile.</p>
+      </div>
+      <div class="lists reveal">
+        <div>
+          <h3>The material</h3>
+          <ul>{properties.map((p) => <li>{p}</li>)}</ul>
+        </div>
+        <div>
+          <h3>The installation</h3>
+          <ul>{install.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      </div>
+      <div class="photo-row reveal" style="margin-top:clamp(1.5rem,3vw,2.5rem)">
+        <figure><Image {...img('2022/12/10-2.jpg', 'Hand holding the thin edge of a slim porcelain tile', '(max-width: 640px) 100vw, 400px')} /><figcaption>Only 1/4″ thick</figcaption></figure>
+        <figure><Image {...img('2022/12/6-2.jpg', 'Tub surround with old white ceramic tile and the first porcelain tile', '(max-width: 640px) 100vw, 400px')} /><figcaption>Going over old ceramic tile</figcaption></figure>
+        <figure><Image {...img('2022/12/7-2.jpg', 'The same tub surround finished with marble-look porcelain tiles', '(max-width: 640px) 100vw, 400px')} /><figcaption>The finished surround</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faq}>Porcelain tile <em>questions</em></Faq>
+</Base>

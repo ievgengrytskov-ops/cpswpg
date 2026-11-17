@@ -1,0 +1,148 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+import { site, showroomAddress } from '../data/site';
+import { wp } from '../lib/images';
+
+const f = site.facts;
+const img = (src: string, alt: string, sizes: string) => {
+  const meta = wp(src);
+  const top = Math.min(1200, meta.width);
+  return { src: meta, alt, sizes, widths: [...new Set([400, 800].filter((w) => w < top).concat(top))] };
+};
+
+const why = [
+  'Protects the wall behind the sink from water',
+  'Takes grease and food splatter behind the stove',
+  'Stops knives, boards and pots from marking the wall',
+  'Adds a stone feature to the kitchen, like a picture on the wall',
+];
+const porcelain = [
+  'Few joints, so grease has nowhere to sit',
+  'Wipes clean with mild soap',
+  'Withstands heat, resists stains and scratches',
+  'Colour does not fade over time',
+  'Only 1/4″ thick and light',
+];
+const work = [
+  { image: 'cps/40.jpg', alt: 'Kitchen with white shaker cabinets, black counters and a marble-look porcelain backsplash' },
+  { image: 'cps/35.jpg', alt: 'Kitchen with white cabinets and a marble-look porcelain backsplash' },
+  { image: '2022/12/10-3-scaled.jpg', alt: 'Gas range with a marble-look porcelain backsplash and matching island' },
+];
+const renovation = [
+  'Removal of old cabinets, appliances and garbage',
+  'Painting of walls and ceiling, new light fixtures',
+  'Flooring: tile, vinyl, hardwood or laminate',
+  'Backsplash in large porcelain tile',
+  'Kitchen cabinets and countertop installation',
+  'Fridge alignment, stove and dishwasher connection',
+];
+const tips = [
+  { title: 'Light the work area', text: 'Lighting over the counter makes cutting and cooking safer.' },
+  { title: 'Drawers below', text: 'Pull-out drawers in the lower cabinets and lift-up doors above are the most practical.' },
+  { title: 'Patterned counters', text: 'A countertop with a small stone pattern hides daily marks better than a plain light one.' },
+  { title: 'Grey is in', text: 'Shades of grey lead kitchen colours, and they pair well with marble-look porcelain.' },
+];
+const faq = [
+  { q: 'How high should a backsplash go?', a: 'Anywhere from a few inches above the counter up to the ceiling. Large porcelain tiles look best at full height, as one continuous stone surface.' },
+  { q: 'Can porcelain go behind the stove?', a: 'Yes. Porcelain withstands heat and resists grease and stains, so it is a good choice behind a range.' },
+  { q: 'What about a bathroom vanity?', a: 'A backsplash behind a vanity protects the wall from water. With a pedestal sink that does not touch the wall, it is mostly decorative.' },
+  { q: 'Can I buy the tiles and install them myself?', a: `Yes. You can buy large-format porcelain tile at our showroom at ${showroomAddress}. Delivery in Winnipeg is free when you buy 4 tiles or more.` },
+  { q: 'How do I clean it?', a: 'Wipe with a damp cloth and mild soap. The few grout lines should be sealed from time to time.' },
+];
+const schema = [{
+  '@type': 'Service',
+  name: 'Kitchen backsplash installation with large-format porcelain tile',
+  serviceType: 'Kitchen backsplash',
+  url: `${site.url}/kitchen/`,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: f.serviceArea,
+}];
+---
+<Base
+  title="Porcelain Kitchen Backsplash in Winnipeg | Canadian Prime Solutions"
+  description={`Kitchen backsplashes in large-format natural porcelain tile: one continuous stone look with almost no grout. Kitchen renovation in ${f.serviceArea}.`}
+  image="cps/41.jpg"
+  crumb="Kitchen Backsplash"
+  faq={faq}
+  schema={schema}
+>
+  <PageHero
+    kicker="Kitchen backsplashes · Winnipeg"
+    lead="A large porcelain backsplash gives one continuous stone look from the counter to the cabinets, with almost no grout to clean. It protects the wall from water, grease and splatter."
+    image="cps/41.jpg"
+    alt="White kitchen with a marble-look porcelain backsplash and dark countertop"
+  >
+    <Fragment slot="title">Kitchen backsplashes in <em>natural porcelain</em></Fragment>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Why a backsplash</span>
+          <h2>Practical first, <em>beautiful too</em></h2>
+        </div>
+        <p>A backsplash is the vertical surface behind the counter. In a kitchen it does a lot of work.</p>
+      </div>
+      <div class="lists reveal">
+        <div>
+          <h3>What a backsplash does</h3>
+          <ul>{why.map((w) => <li>{w}</li>)}</ul>
+        </div>
+        <div>
+          <h3>Why large porcelain</h3>
+          <ul>{porcelain.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Recent kitchens</span>
+          <h2>One stone look, <em>wall to wall</em></h2>
+        </div>
+        <a class="link-arrow" href="/gallery/">See the full gallery</a>
+      </div>
+      <div class="photo-row reveal">
+        {work.map((w) => <Image {...img(w.image, w.alt, '(max-width: 640px) 100vw, 400px')} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap duo duo--flip">
+      <div class="reveal">
+        <span class="eyebrow">Kitchen renovation</span>
+        <h2>From old cabinets to <em>a finished kitchen</em></h2>
+        <p class="muted">A kitchen renovation is a lot of work, but it goes smoothly when one team handles it. We can do as much or as little as you need.</p>
+        <ul>{renovation.map((r) => <li>{r}</li>)}</ul>
+        <a class="link-arrow" href="#contacts">Ask about your kitchen</a>
+      </div>
+      <div class="reveal">
+        <Image {...img('2022/12/9-3.jpg', 'Kitchen with a marble-look countertop and waterfall island', '(max-width: 860px) 100vw, 560px')} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Tips from our designer</span>
+          <h2>Small choices, <em>big difference</em></h2>
+        </div>
+      </div>
+      <ol class="steps reveal plain">
+        {tips.map((t) => <li><h3>{t.title}</h3><p>{t.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <Faq items={faq}>Backsplash <em>questions</em></Faq>
+</Base>

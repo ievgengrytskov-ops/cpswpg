@@ -1,0 +1,63 @@
+---
+import { site, fullAddress, teamPhoto } from '../data/site';
+import Photo from './Photo.astro';
+interface Props { /** Render the heading as the page h1 (on /contact/) */ main?: boolean; }
+const { main = false } = Astro.props;
+const Heading = main ? 'h1' : 'h2';
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+---
+<section class="section section--panel" id="contacts">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow">Get a quote</span>
+      <Heading>Tell us about <em>your bathroom</em></Heading>
+      <p class="muted">Call us or send a short message. We work across {site.facts.serviceArea} and will get back to you to arrange a visit.</p>
+      <ul class="contact-list">
+        {site.phones.map((p) => <li><a class="contact-phone" href={p.href}>{p.label}</a></li>)}
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a></li>
+      </ul>
+      <ul class="contact-list contact-socials">
+        {site.socials.map((s) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}
+      </ul>
+      <Photo src={teamPhoto.image} alt={teamPhoto.alt} class="team" sizes="(max-width: 780px) 100vw, 520px" max={1200} />
+    </div>
+    <form class="form" id="contact-form" data-endpoint={endpoint} method="post">
+      {w3key && <input type="hidden" name="access_key" value={w3key} />}
+      <input type="hidden" name="subject" value="New request from cpswpg.ca" />
+      <input class="hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required /></div>
+      <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required /></div>
+      <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="5" required></textarea></div>
+      <button class="btn" type="submit">Send message</button>
+      <p class="form-note">We use your details only to reply to your request. See our <a href="/privacy-policy/">Privacy Policy</a>.</p>
+      <p class="status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('.status')!;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) { status.textContent = 'The form is not connected yet. Please call us.'; return; }
+      const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      btn.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = 'Thank you. We will contact you soon.';
+      } catch {
+        status.textContent = 'Could not send the message. Please call us instead.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+</script>

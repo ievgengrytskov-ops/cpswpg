@@ -1,0 +1,27 @@
+---
+// FAQ section. Pass the same items to <Base faq={...}> so they also go into JSON-LD (FAQPage).
+import { site } from '../data/site';
+interface Props {
+  items: { q: string; a: string }[];
+  panel?: boolean;
+}
+const { items, panel = false } = Astro.props;
+const phone = site.phones[0];
+---
+<section class:list={['section', { 'section--panel': panel }]}>
+  <div class="wrap split">
+    <div class="reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2><slot>Questions we <em>often hear</em></slot></h2>
+      <p class="muted">Not answered here? Call us at <a href={phone.href}>{phone.label}</a>.</p>
+    </div>
+    <div class="faq reveal">
+      {items.map((q) => (
+        <details>
+          <summary>{q.q}</summary>
+          <div><p>{q.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

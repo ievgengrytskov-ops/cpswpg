@@ -1,0 +1,28 @@
+---
+import { testimonials, site } from '../data/site';
+const f = site.facts;
+---
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Reviews</span>
+        <h2>Rated <em>{f.googleRating.toFixed(1)}</em> by our clients</h2>
+      </div>
+      <p>{f.googleReviews} reviews on Google from homeowners in {site.areaServed}. <a href={site.mapUrl} rel="noopener" target="_blank">Read them all on Google</a></p>
+    </div>
+    <div class="quotes reveal" tabindex="0" role="region" aria-label="Client reviews">
+      {testimonials.map((t) => (
+        <figure class="quote">
+          <blockquote>
+            <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+            <p>{t.text}</p>
+          </blockquote>
+          <figcaption>
+            <cite><a href={t.url} rel="noopener" target="_blank">{t.name}</a><span>Google review</span></cite>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

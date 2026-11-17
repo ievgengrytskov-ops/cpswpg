@@ -1,0 +1,199 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import YouTube from '../components/YouTube.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Partners from '../components/Partners.astro';
+import ShowroomBand from '../components/ShowroomBand.astro';
+import { site, homeServices, compareRows, beforeAfter, steps, recentWork, homeFaq } from '../data/site';
+import { wp } from '../lib/images';
+
+const f = site.facts;
+const phone = site.phones[0];
+const trust = [
+  { big: `★ ${f.googleRating.toFixed(1)}`, small: `${f.googleReviews} Google reviews`, href: site.mapUrl },
+  { big: '880+', small: 'projects done' },
+  { big: f.installDays, small: 'typical surround install' },
+  { big: '5 years', small: 'warranty on the tile' },
+];
+const img = (src: string, alt: string, sizes: string, eager = false) => {
+  const meta = wp(src);
+  const top = Math.min(1200, meta.width);
+  return {
+    src: meta,
+    alt,
+    sizes,
+    widths: [...new Set([400, 800].filter((w) => w < top).concat(top))],
+    loading: eager ? ('eager' as const) : ('lazy' as const),
+    fetchpriority: eager ? ('high' as const) : undefined,
+  };
+};
+---
+<Base
+  title="Large-Format Porcelain Tile in Winnipeg: Showroom & Installation | Canadian Prime Solutions"
+  description={`Large-format natural porcelain tile (24×48, 71×36, 47×106) at our Winnipeg showroom. Bathtub surrounds and backsplashes installed in ${f.installDays}, 5-year warranty on the tile.`}
+  faq={homeFaq}
+>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>
+        <span class="h1-kicker">Showroom · Sales · Installation · Winnipeg</span>
+        Large-format natural porcelain tile with the look of <em>marble and stone</em>
+      </h1>
+      <p class="lead">Tiles up to 47″ × 106″ and only 1/4″ thick, made from natural clay and minerals. Buy them at our Winnipeg showroom, or let our team install your bathtub surround in {f.installDays}.</p>
+      <div class="ctas">
+        <a class="btn" href="/showroom/">Visit the showroom</a>
+        <a class="link-arrow" href="#contacts">Get an installation quote</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <Image {...img('cps/16.jpg', 'Freestanding bathtub in front of one large grey marble-look porcelain wall', '(max-width: 860px) 100vw, 55vw', true)} />
+      <div class="stamp"><b>Up to 47″ × 106″</b>natural porcelain, 1/4″ thin</div>
+    </div>
+  </section>
+
+  <div class="trust">
+    {trust.map((t) => (
+      <div>
+        <b>{t.big}</b>
+        <span>{t.href ? <a href={t.href} rel="noopener" target="_blank">{t.small}</a> : t.small}</span>
+      </div>
+    ))}
+  </div>
+
+  <ShowroomBand />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Services</span>
+          <h2>Bathrooms and kitchens in <em>large porcelain</em></h2>
+        </div>
+        <p>From a new surround around your tub to a full bathroom renovation.</p>
+      </div>
+      <div class="cards reveal">
+        {homeServices.map((s) => (
+          <a class="card" href={s.href}>
+            <Image {...img(s.image, s.alt, '(max-width: 540px) 100vw, (max-width: 1000px) 50vw, 310px')} />
+            <div class="card-body">
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">Why large porcelain</span>
+        <h2>Natural porcelain or <em>small ceramic tile?</em></h2>
+        <p class="muted">Ceramic tile is common, but small tiles mean many grout lines, heavy walls and a long, messy tear-out. Large-format natural porcelain keeps the look of polished stone without those problems.</p>
+        <a class="link-arrow" href="/porcelain-tiles/">More about porcelain tile</a>
+      </div>
+      <table class="compare reveal">
+        <thead>
+          <tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col">Large porcelain tile</th><th scope="col">Small ceramic tile</th></tr>
+        </thead>
+        <tbody>
+          {compareRows.map((r) => (
+            <tr><th scope="row">{r.label}</th><td>{r.porcelain}</td><td>{r.ceramic}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Before &amp; after</span>
+          <h2>Same bathtub. <em>New surround.</em></h2>
+        </div>
+        <p>Drag the handle to compare.</p>
+      </div>
+      <div class="ba-grid reveal">
+        {beforeAfter.map((b) => (
+          <div>
+            <BeforeAfter before={b.before} after={b.after} beforeAlt={b.beforeAlt} afterAlt={b.afterAlt} sizes="(max-width: 760px) 100vw, 600px" />
+            <p class="muted" style="font-size:0.92rem;margin-top:0.8rem">{b.caption}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">How it works</span>
+          <h2>From first call to <em>finished surround</em></h2>
+        </div>
+      </div>
+      <ol class="steps reveal">
+        {steps.map((s) => (
+          <li><h3>{s.title}</h3><p>{s.text}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Recent work</span>
+          <h2>Projects we are <em>proud of</em></h2>
+        </div>
+        <a class="link-arrow" href="/gallery/">See the full gallery</a>
+      </div>
+      <div class="mosaic reveal">
+        {recentWork.map((w, i) => (
+          <Image {...img(w.image, w.alt, i === 0 ? '(max-width: 700px) 100vw, 620px' : '(max-width: 700px) 50vw, 310px')} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap about">
+      <div class="reveal">
+        <span class="eyebrow">About us</span>
+        <h2>A Winnipeg team for <em>bathrooms and kitchens</em></h2>
+        <p class="muted">Canadian Prime Solutions brings experienced installers and younger specialists with fresh ideas into one team. We work with well-known suppliers of finishing materials and fixtures, and we have completed more than 880 projects in houses, condominiums and apartments.</p>
+        <a class="link-arrow" href="/about/">About the company</a>
+      </div>
+      <div class="reveal">
+        <YouTube id={site.videos.intro} title="Canadian Prime Solutions introduction" />
+      </div>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <section class="section section--panel">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions we <em>often hear</em></h2>
+        <p class="muted">Not answered here? Call us at <a href={phone.href}>{phone.label}</a>.</p>
+      </div>
+      <div class="faq reveal">
+        {homeFaq.map((q) => (
+          <details>
+            <summary>{q.q}</summary>
+            <div><p>{q.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Partners />
+</Base>

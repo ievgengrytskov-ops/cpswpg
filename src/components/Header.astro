@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import { nav, site } from '../data/site';
+import emblem from '../assets/brand/emblem.png';
+const path = Astro.url.pathname;
+const current = (href: string) => (path === href ? 'page' : undefined);
+const phone = site.phones[0];
+---
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="/" aria-label={`${site.name}, home`}>
+      <Image src={emblem} alt="" widths={[56, 112]} sizes="56px" loading="eager" format="png" />
+      <span class="brand-name">Canadian Prime Solutions<small>Natural porcelain tile · Winnipeg</small></span>
+    </a>
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {nav.map((i) =>
+          i.children ? (
+            <li class="has-sub">
+              <a href={i.children[0].href} class="sub-toggle" aria-haspopup="true">{i.label}</a>
+              <ul class="sub">
+                {i.children.map((c) => <li><a href={c.href} aria-current={current(c.href)}>{c.label}</a></li>)}
+              </ul>
+            </li>
+          ) : (
+            <li><a href={i.href} aria-current={current(i.href!)}>{i.label}</a></li>
+          )
+        )}
+      </ul>
+    </nav>
+    <div class="hdr-cta">
+      <a class="hdr-tel" href={phone.href}>{phone.label}</a>
+      <a class="btn" href="#contacts">Get a quote</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    </div>
+  </div>
+</header>
+<div class="callbar">
+  <a href={phone.href}>Call {phone.label}</a>
+  <a href="#contacts">Get a quote</a>
+</div>
+<script>
+  const hdr = document.getElementById('hdr')!;
+  const btn = hdr.querySelector<HTMLButtonElement>('.menu-btn')!;
+  const set = (open: boolean) => {
+    hdr.toggleAttribute('data-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  btn.addEventListener('click', () => set(!hdr.hasAttribute('data-open')));
+  hdr.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', () => set(false)));
+
+  // Reveal sections on scroll. Content is visible without JS; .js is set in <head>.
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }),
+    { rootMargin: '0px 0px -8% 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>

@@ -1,0 +1,46 @@
+---
+// First screen of an inner page: text on the left, photo on the right (same look as the home hero).
+// Usage: <PageHero kicker="..." lead="..." image="cps/4.jpg" alt="..."><Fragment slot="title">Text <em>accent</em></Fragment></PageHero>
+import { Image } from 'astro:assets';
+import { wp } from '../lib/images';
+import { site } from '../data/site';
+
+interface Props {
+  kicker: string;
+  lead: string;
+  image: string;
+  alt: string;
+  stamp?: { big: string; small: string };
+  primary?: { label: string; href: string };
+  secondary?: { label: string; href: string };
+}
+const phone = site.phones[0];
+const {
+  kicker,
+  lead,
+  image,
+  alt,
+  stamp,
+  primary = { label: 'Get a quote', href: '#contacts' },
+  secondary = { label: `Call ${phone.label}`, href: phone.href },
+} = Astro.props;
+const meta = wp(image);
+const top = Math.min(1200, meta.width);
+---
+<section class="hero hero--page">
+  <div class="hero-text">
+    <h1>
+      <span class="h1-kicker">{kicker}</span>
+      <slot name="title" />
+    </h1>
+    <p class="lead">{lead}</p>
+    <div class="ctas">
+      <a class="btn" href={primary.href}>{primary.label}</a>
+      <a class="link-arrow" href={secondary.href}>{secondary.label}</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <Image src={meta} alt={alt} widths={[...new Set([400, 800].filter((w) => w < top).concat(top))]} sizes="(max-width: 860px) 100vw, 55vw" loading="eager" fetchpriority="high" />
+    {stamp && <div class="stamp"><b>{stamp.big}</b>{stamp.small}</div>}
+  </div>
+</section>

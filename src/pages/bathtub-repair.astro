@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site';
+import { wp } from '../lib/images';
+
+const f = site.facts;
+const img = (src: string, alt: string, sizes: string) => {
+  const meta = wp(src);
+  const top = Math.min(1200, meta.width);
+  return { src: meta, alt, sizes, widths: [...new Set([400, 800].filter((w) => w < top).concat(top))] };
+};
+const rows = [
+  { label: 'Best for', a: 'Original enamel that is intact but rusty, stained, discoloured, scratched or chipped', b: 'A worn or damaged surface that needs a new coat' },
+  { label: 'How it works', a: 'The factory enamel is cleaned with acids and a nano cleaner, then sealed with a liquid ceramic nano coating', b: 'Chips and cracks are filled, the surface is etched or primed for grip, then a new two-part top coat is sprayed on' },
+  { label: 'Result', a: 'The original enamel with extra gloss. Never yellows', b: 'A like-new white surface, but softer than factory enamel' },
+  { label: 'Smell and dust', a: 'Smell free, allergy free, dust free', b: 'Has a smell while the coating cures' },
+  { label: 'Use the tub', a: 'Within 24 hours', b: 'After the coating cures' },
+  { label: 'Price', a: 'More affordable than refinishing', b: 'Higher' },
+];
+const faq = [
+  { q: 'Restoration or refinishing: which one do I need?', a: 'If the original enamel is intact but stained, rusty or scratched, restoration is the better choice: it lasts longer and costs less. If the surface is worn through or damaged, the tub needs refinishing. We check this during the visit.' },
+  { q: 'How soon can I use the bathtub?', a: 'After restoration you can use the bathtub within 24 hours.' },
+  { q: 'Is there a smell?', a: 'Restoration is smell free, allergy free and dust free.' },
+  { q: 'Will the finish turn yellow?', a: 'No. The ceramic restoration coating never yellows.' },
+  { q: 'Can I replace the caulking later?', a: 'Yes. After restoration the caulking can be changed without damaging the finish.' },
+  { q: 'What if the tub cannot be saved?', a: 'Then we replace it, and we can install a large porcelain tile surround around the new tub in the same job.' },
+];
+const schema = [{
+  '@type': 'Service',
+  name: 'Bathtub restoration and refinishing',
+  serviceType: 'Bathtub refinishing',
+  url: `${site.url}/bathtub-repair/`,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: f.serviceArea,
+}];
+---
+<Base
+  title="Bathtub Restoration & Refinishing in Winnipeg | Canadian Prime Solutions"
+  description="Bathtub restoration in Winnipeg: smell free, allergy free, dust free, and you can use the tub within 24 hours. Refinishing for worn or damaged tubs."
+  image="2022/12/2-4-scaled.jpg"
+  crumb="Bathtub Refinishing"
+  faq={faq}
+  schema={schema}
+>
+  <PageHero
+    kicker="Bathtub restoration & refinishing · Winnipeg"
+    lead="Rust, stains and scratches do not mean a new tub. We restore the original enamel without smell or dust, and you can use the bathtub again within 24 hours."
+    image="2022/12/2-4-scaled.jpg"
+    alt="Bathtub after enamel restoration"
+    stamp={{ big: '24 hours', small: 'and the tub is ready' }}
+  >
+    <Fragment slot="title">Bring your old bathtub <em>back to life</em></Fragment>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Before &amp; after</span>
+          <h2>Same tub, <em>restored enamel</em></h2>
+        </div>
+        <p>Drag the handle to compare.</p>
+      </div>
+      <div class="reveal" style="max-width:900px">
+        <BeforeAfter before="2022/12/1-4-scaled.jpg" after="2022/12/2-4-scaled.jpg" beforeAlt="Bathtub with rust stains on the enamel" afterAlt="The same bathtub after enamel restoration" sizes="(max-width: 900px) 100vw, 900px" />
+      </div>
+      <div class="ba-grid reveal" style="margin-top:clamp(1.5rem,3vw,2.5rem)">
+        <figure style="margin:0"><Image {...img('2022/12/3-3-scaled.jpg', 'Refinished white bathtub with a glossy surface', '(max-width: 760px) 100vw, 600px')} /></figure>
+        <figure style="margin:0"><Image {...img('2022/12/4-4-scaled.jpg', 'Refinished bathtub in front of white wall tile', '(max-width: 760px) 100vw, 600px')} /></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Two ways to fix a tub</span>
+          <h2>Restoration or <em>refinishing?</em></h2>
+        </div>
+        <p>Which one you need depends on the condition of the enamel. We check it during the visit.</p>
+      </div>
+      <table class="compare reveal">
+        <thead>
+          <tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col">Restoration</th><th scope="col">Refinishing</th></tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => <tr><th scope="row">{r.label}</th><td>{r.a}</td><td>{r.b}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <Faq items={faq}>Bathtub repair <em>questions</em></Faq>
+</Base>

@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import Faq from '../components/Faq.astro';
+import { site, beforeAfter } from '../data/site';
+import { wp } from '../lib/images';
+
+const f = site.facts;
+const img = (src: string, alt: string, sizes: string) => {
+  const meta = wp(src);
+  const top = Math.min(1200, meta.width);
+  return { src: meta, alt, sizes, widths: [...new Set([400, 800].filter((w) => w < top).concat(top))] };
+};
+
+const benefits = [
+  'Large tiles up to 47″ × 106″: often one tile per wall',
+  'Almost no grout lines to scrub or reseal',
+  'Only 1/4″ thick and light, so it can often go over the old tile',
+  'Natural porcelain: scratch resistant, hygienic, handles most cleaning products',
+  'Colour does not change or fade over time',
+  `Most surrounds are finished in ${f.installDays}`,
+];
+const problems = [
+  'Small tiles, laid one by one',
+  'Heavy and thick',
+  'Many grout lines that collect dirt and mould',
+  'Old tile usually has to be torn out first',
+  'Long, dusty job',
+];
+const steps = [
+  { title: 'Check the walls', text: 'We look at the old tile and the walls behind it. If the tile is solid, the new tiles can often go right over it.' },
+  { title: 'Prepare the base', text: 'Where needed, we install a waterproof backer board such as DensShield, Kerdi Board or XPS board. It does not rot or grow mould.' },
+  { title: 'Set the tiles', text: 'The large porcelain tiles are bonded with thin-set mortar, cut around the faucet and fixtures, and edges are finished cleanly.' },
+  { title: 'Grout and seal', text: 'The few joints are grouted and sealed against moisture. Then your bathtub is ready to use.' },
+];
+const prep = [
+  { image: '2022/12/16s.jpg', alt: 'Tub walls covered with DensShield backer board, seams taped', caption: 'Backer board with taped seams' },
+  { image: '2022/12/17s.jpg', alt: 'Backer board walls coated with a red waterproofing membrane', caption: 'Waterproofing membrane' },
+  { image: '2022/12/18s-3.jpg', alt: 'Marble-look porcelain tiles installed around the window over the tub', caption: 'Large porcelain tiles installed' },
+];
+const renovation = [
+  'Bathtub replacement, or refinishing and restoration of the old one',
+  'Bathtub surround in large porcelain tile',
+  'Shower base, glass doors and shower kits',
+  'Flooring: laminate, hardwood, vinyl, SPC planks or tile',
+  'Vanity, toilet, sink and bathroom furniture',
+  'Plumbing: faucets, taps and showerheads',
+  'Painting of walls and ceiling, new light fixtures',
+  'Removal of old materials and garbage',
+];
+const work = [
+  { image: 'cps/38.jpg', alt: 'Bathtub surround with grey marble-look porcelain tiles' },
+  { image: 'cps/6.jpg', alt: 'Bathtub surround with onyx-look porcelain tiles and grab bars' },
+  { image: 'cps/14.jpg', alt: 'Tub surround with marble-look porcelain and matte black fixtures' },
+];
+const faq = [
+  { q: 'How long does a bathtub surround take?', a: `Most bathtub surrounds are installed in ${f.installDays}.` },
+  { q: 'Can you install over my old tile?', a: 'Often, yes. Large porcelain tiles are only 1/4″ thick and light, so they can go over existing tile when it is solid. We check this during the visit. If the old tile has to come off, we remove it and install a new waterproof backer board.' },
+  { q: 'Do you do showers too?', a: 'Yes. Walk-in showers, tub showers and shower walls, including shower bases, glass doors and shower kits.' },
+  { q: 'What sizes and designs can I choose?', a: 'Large-format porcelain tile comes in 24″ × 48″, 71″ × 36″ and 47″ × 106″, in marble, onyx and stone looks. You can see full-size tiles at our showroom at 1041 Erin St.' },
+  { q: 'How do I clean it?', a: 'Wipe with a damp cloth and mild soap. Porcelain resists most cleaning products. The few grout lines should be sealed from time to time.' },
+  { q: 'Is there a warranty?', a: 'Yes, there is a 5-year warranty on the porcelain tile.' },
+  { q: 'How much does a bathtub surround cost?', a: 'It depends on the size of the bathroom, the tiles you choose and the condition of the walls. We give you a quote after a visit.' },
+];
+const schema = [{
+  '@type': 'Service',
+  name: 'Bathtub surround installation with large-format porcelain tile',
+  serviceType: 'Bathtub surround',
+  url: `${site.url}/bathroom/`,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: f.serviceArea,
+}];
+---
+<Base
+  title="Porcelain Bathtub Surrounds in Winnipeg | Canadian Prime Solutions"
+  description={`Bathtub surrounds in large-format natural porcelain tile, often installed over the old tile in ${f.installDays}. 5-year warranty on the tile. Bathroom renovation in ${f.serviceArea}.`}
+  image="cps/38.jpg"
+  crumb="Bathtub Surround"
+  faq={faq}
+  schema={schema}
+>
+  <PageHero
+    kicker="Bathtub surrounds · Winnipeg"
+    lead={`We replace dated tile around your tub with large tiles of natural porcelain. Fewer joints, nothing to scrub, often no tear-out, and most surrounds are finished in ${f.installDays}.`}
+    image="cps/4.jpg"
+    alt="Bathtub surround with large white marble-look porcelain tiles"
+    stamp={{ big: f.installDays, small: 'typical installation' }}
+  >
+    <Fragment slot="title">Bathtub surrounds in <em>natural porcelain</em></Fragment>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Why large porcelain</span>
+          <h2>Everything good about tile, <em>without the grout</em></h2>
+        </div>
+        <p>Ceramic tile has been the standard for years. Large-format porcelain keeps its strengths and removes its problems.</p>
+      </div>
+      <div class="lists reveal">
+        <div>
+          <h3>Large porcelain tile</h3>
+          <ul>{benefits.map((b) => <li>{b}</li>)}</ul>
+        </div>
+        <div class="cons">
+          <h3>Small ceramic tile</h3>
+          <ul>{problems.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Before &amp; after</span>
+          <h2>Same bathtub. <em>New surround.</em></h2>
+        </div>
+        <p>Drag the handle to compare.</p>
+      </div>
+      <div class="ba-grid reveal">
+        {beforeAfter.map((b) => (
+          <div>
+            <BeforeAfter before={b.before} after={b.after} beforeAlt={b.beforeAlt} afterAlt={b.afterAlt} sizes="(max-width: 760px) 100vw, 600px" />
+            <p class="muted" style="font-size:0.92rem;margin-top:0.8rem">{b.caption}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Recent surrounds</span>
+          <h2>Marble, onyx <em>and stone looks</em></h2>
+        </div>
+        <a class="link-arrow" href="/gallery/">See the full gallery</a>
+      </div>
+      <div class="photo-row reveal">
+        {work.map((w) => <Image {...img(w.image, w.alt, '(max-width: 640px) 100vw, 400px')} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">How we install</span>
+          <h2>A clean job in <em>{f.installDays}</em></h2>
+        </div>
+      </div>
+      <ol class="steps reveal">
+        {steps.map((s) => <li><h3>{s.title}</h3><p>{s.text}</p></li>)}
+      </ol>
+      <div class="photo-row reveal" style="margin-top:clamp(1.5rem,3vw,2.5rem)">
+        {prep.map((p) => (
+          <figure><Image {...img(p.image, p.alt, '(max-width: 640px) 100vw, 400px')} /><figcaption>{p.caption}</figcaption></figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap duo">
+      <div class="reveal">
+        <span class="eyebrow">Under the tile</span>
+        <h2>Built to stay <em>dry</em></h2>
+        <p class="muted">The tiles sit on a backer board made for wet areas instead of drywall or plywood. Boards such as DensShield, Kerdi Board and XPS do not rot, shrink or grow mould. Porcelain over a proper backer is one of the most durable wall surfaces you can have.</p>
+        <p class="muted">We also sell XPS boards (60″ × 36″ × 1/2″) at our showroom.</p>
+      </div>
+      <div class="reveal diagram-img">
+        <Image {...img('2022/12/20.png', 'Diagram of a tub surround: backer board, joint tape, thin-set mortar, porcelain tile and plumbing', '(max-width: 860px) 100vw, 560px')} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--panel" id="renovation">
+    <div class="wrap duo duo--flip">
+      <div class="reveal">
+        <span class="eyebrow">Full bathroom renovation</span>
+        <h2>The whole bathroom, <em>one team</em></h2>
+        <p class="muted">Bathrooms are small, so every detail counts. If you want more than a new surround, we take care of the whole room.</p>
+        <ul>{renovation.map((r) => <li>{r}</li>)}</ul>
+        <a class="link-arrow" href="#contacts">Ask about your bathroom</a>
+      </div>
+      <div class="reveal">
+        <Image {...img('cps/3.jpg', 'Renovated bathroom with a marble-look porcelain tub surround, white vanity and round LED mirror', '(max-width: 860px) 100vw, 560px')} />
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faq}>Bathtub surround <em>questions</em></Faq>
+</Base>

@@ -1,0 +1,26 @@
+---
+// Short showroom & sales block for the home page and product pages. Full page: /showroom/
+import Photo from './Photo.astro';
+import { showroom, showroomAddress } from '../data/site';
+---
+<section class="section section--panel showroom-band">
+  <div class="wrap about">
+    <div class="reveal">
+      <Photo src={showroom.photo.image} alt={showroom.photo.alt} sizes="(max-width: 860px) 100vw, 600px" max={1200} />
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">New showroom · {showroom.name}</span>
+      <h2>See full-size tiles <em>before you choose</em></h2>
+      <p class="muted">We sell large-format porcelain tile, XPS boards and stone veneer. Buy for your own project or have our team install it.</p>
+      <ul class="sizes">
+        {showroom.products[0].sizes.map((s) => <li>{s}</li>)}
+      </ul>
+      <p class="muted">{showroomAddress} · open {showroom.hours.toLowerCase()}</p>
+      <p class="delivery">{showroom.delivery}</p>
+      <div class="ctas">
+        <a class="btn" href="/showroom/">Visit the showroom</a>
+        <a class="link-arrow" href={showroom.mapUrl} rel="noopener" target="_blank">Get directions</a>
+      </div>
+    </div>
+  </div>
+</section>
