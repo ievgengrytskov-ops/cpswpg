@@ -1,0 +1,27 @@
+---
+// WhatsApp / Viber buttons (owner 2026-11-17: both on the main number, site.messengers).
+// variant "pill": icon + label; "icon": square icon button (mobile call bar).
+import { site } from '../data/site';
+interface Props { variant?: 'pill' | 'icon'; class?: string }
+const { variant = 'pill', class: cls } = Astro.props;
+---
+<div class:list={['msgr', `msgr--${variant}`, cls]}>
+  {site.messengers.map((m) => (
+    <a class={`msgr-btn msgr-${m.id}`} href={m.href} rel="noopener" target={m.id === 'whatsapp' ? '_blank' : undefined}
+       aria-label={variant === 'icon' ? `Message us on ${m.label}` : undefined}>
+      {m.id === 'whatsapp' ? (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3.5 20.5l1.3-4.1A8.5 8.5 0 1 1 8 19.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+          <path d="M9.1 7.7c.3-.3.8-.3 1 .1l.8 1.7c.1.3 0 .6-.2.8l-.6.6c.6 1.2 1.6 2.2 2.9 2.9l.6-.6c.2-.2.5-.3.8-.2l1.7.8c.4.2.4.7.1 1l-.7.8c-.5.5-1.3.6-2 .3a9.4 9.4 0 0 1-5-5c-.3-.7-.2-1.5.3-2z" fill="currentColor" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2.8c4.9 0 8.4 1.6 8.4 7.6 0 5.2-2.7 7.3-7.6 7.5L9 21v-3.3c-3.8-.9-5.4-3.2-5.4-7.3 0-6 3.5-7.6 8.4-7.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+          <path d="M9.4 6.9c.3-.3.7-.2.9.1l.8 1.4c.1.3.1.6-.2.8l-.5.5c.5 1.1 1.4 2 2.5 2.5l.5-.5c.2-.2.5-.3.8-.2l1.4.8c.3.2.4.6.1.9l-.6.7c-.4.4-1 .5-1.6.3a8 8 0 0 1-4.5-4.5c-.2-.6-.1-1.2.3-1.6z" fill="currentColor" />
+          <path d="M13 5.9a3.6 3.6 0 0 1 3.3 3.3M13 7.6a1.9 1.9 0 0 1 1.6 1.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+        </svg>
+      )}
+      {variant === 'pill' && <span>{m.label}</span>}
+    </a>
+  ))}
+</div>

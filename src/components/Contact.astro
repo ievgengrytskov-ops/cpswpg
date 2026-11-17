@@ -1,6 +1,7 @@
 ---
 import { site, fullAddress, teamPhoto } from '../data/site';
 import Photo from './Photo.astro';
+import Messengers from './Messengers.astro';
 interface Props { /** Render the heading as the page h1 (on /contact/) */ main?: boolean; }
 const { main = false } = Astro.props;
 const Heading = main ? 'h1' : 'h2';
@@ -12,9 +13,10 @@ const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY || site.form.web3formsKey;
     <div>
       <span class="eyebrow">Get a quote</span>
       <Heading>Tell us about <em>your bathroom</em></Heading>
-      <p class="muted">Call us or send a short message. We work across {site.facts.serviceArea} and will get back to you to arrange a visit.</p>
+      <p class="muted">Call, message us on WhatsApp or Viber, or send a short request. We work across {site.facts.serviceArea} and will get back to you to arrange a visit.</p>
       <ul class="contact-list">
         {site.phones.map((p) => <li><a class="contact-phone" href={p.href}>{p.label}</a></li>)}
+        <li><Messengers /></li>
         <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
         <li><a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a></li>
         <li>Office hours: {site.hours.text}</li>

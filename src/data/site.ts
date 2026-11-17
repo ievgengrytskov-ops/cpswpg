@@ -16,6 +16,11 @@ export const site = {
     { label: '204 951 6379', href: 'tel:+12049516379' },
     { label: '204 869 6379', href: 'tel:+12048696379' },
   ],
+  // Messengers on the main number (owner 2026-11-17)
+  messengers: [
+    { id: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/12049516379' },
+    { id: 'viber', label: 'Viber', href: 'viber://chat?number=%2B12049516379' },
+  ],
   socials: [
     { label: 'Instagram', href: 'https://www.instagram.com/cps.winnipeg' },
     { label: 'Facebook', href: 'https://www.facebook.com/cpswpg' },

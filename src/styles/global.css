@@ -115,9 +115,12 @@ p { margin: 0 0 1em; max-width: 66ch; }
 /* mobile call bar */
 .callbar { display: none; }
 @media (max-width: 720px) {
-  .callbar { display: grid; grid-template-columns: 1fr 1fr; position: fixed; z-index: 45; left: 0; right: 0; bottom: 0; background: var(--panel); border-top: 1px solid var(--line); }
+  .callbar { display: grid; grid-template-columns: 1fr auto 1fr; position: fixed; z-index: 45; left: 0; right: 0; bottom: 0; background: var(--panel); border-top: 1px solid var(--line); }
   .callbar a { padding: 0.95rem; text-align: center; font-weight: 600; text-decoration: none; color: var(--ink); }
-  .callbar a + a { background: var(--accent); color: var(--on-accent); }
+  .callbar > a:last-child { background: var(--accent); color: var(--on-accent); }
+  .callbar .msgr { gap: 0; border-inline: 1px solid var(--line); }
+  .callbar .msgr-btn { padding: 0 0.95rem; border-radius: 0; border: 0; background: none; height: 100%; }
+  .callbar .msgr-btn + .msgr-btn { border-left: 1px solid var(--line); }
   body { padding-bottom: 3.4rem; }
 }
 
@@ -388,6 +391,20 @@ p { margin: 0 0 1em; max-width: 66ch; }
   .marquee-list[aria-hidden] { display: none; }
   .logo-card { scroll-snap-align: start; }
 }
+
+/* ---------- messengers (WhatsApp / Viber) ---------- */
+.msgr { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.msgr-btn { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.6rem 1.1rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: 0.2s; }
+.msgr-btn svg { width: 1.25rem; height: 1.25rem; flex: none; }
+.msgr-whatsapp svg { color: #25d366; }
+.msgr-viber svg { color: #8b7cf6; }
+.msgr-whatsapp:hover { border-color: #25d366; color: var(--ink); background: rgb(37 211 102 / 0.1); }
+.msgr-viber:hover { border-color: #8b7cf6; color: var(--ink); background: rgb(139 124 246 / 0.12); }
+.contact-list .msgr { margin: 0.6rem 0 0.4rem; }
+.msgr--foot { margin: 0.4rem 0 0.6rem; }
+.msgr--foot .msgr-btn { padding: 0.45rem 0.9rem; font-size: 0.88rem; color: var(--muted); }
+.msgr--icon .msgr-btn { display: grid; place-items: center; }
+.msgr--icon svg { width: 1.45rem; height: 1.45rem; }
 
 /* ---------- contact ---------- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 6rem); }

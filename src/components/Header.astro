@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { nav, site } from '../data/site';
 import emblem from '../assets/brand/emblem.png';
+import Messengers from './Messengers.astro';
 const path = Astro.url.pathname;
 const current = (href: string) => (path === href ? 'page' : undefined);
 const phone = site.phones[0];
@@ -40,7 +41,8 @@ const phone = site.phones[0];
   </div>
 </header>
 <div class="callbar">
-  <a href={phone.href}>Call {phone.label}</a>
+  <a href={phone.href}>Call</a>
+  <Messengers variant="icon" />
   <a href="#contacts">Get a quote</a>
 </div>
 <script>
