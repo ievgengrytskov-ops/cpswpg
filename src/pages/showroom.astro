@@ -1,31 +1,11 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import { site, showroom, showroomAddress, showroomFullAddress, showroomFaq } from '../data/site';
 import { wp } from '../lib/images';
 
 const phone = site.phones[0];
-const storeImg = await getImage({ src: wp(showroom.photo.image), width: 1200, format: 'jpg' });
-const storeSchema = {
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: showroom.days,
-    opens: showroom.opens,
-    closes: showroom.closes,
-  },
-  '@type': 'Store',
-  '@id': `${site.url}/showroom/#store`,
-  name: showroom.name,
-  legalName: showroom.legalName,
-  email: site.email,
-  url: `${site.url}/showroom/`,
-  image: new URL(storeImg.src, site.url).href,
-  telephone: site.phones.map((p) => p.href.replace('tel:', '')),
-  address: { '@type': 'PostalAddress', streetAddress: showroom.street, addressLocality: 'Winnipeg', addressRegion: 'MB', postalCode: showroom.postal, addressCountry: 'CA' },
-  parentOrganization: { '@id': `${site.url}/#business` },
-  description: 'Large-format natural porcelain tile, XPS boards and stone veneer.',
-};
 const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(showroomFullAddress)}&z=15&output=embed`;
 const natural = [
   { title: 'Natural clay and minerals', text: 'Made from fine kaolin clay with quartz and feldspar, pressed and fired at over 1,200 °C.' },
@@ -39,7 +19,6 @@ const natural = [
   description={`Large-format porcelain tile (24×48, 71×36, 47×106), XPS boards and stone veneer at our showroom, ${showroomAddress}. Free delivery on 4+ tiles.`}
   image={showroom.photo.image}
   faq={showroomFaq}
-  schema={[storeSchema]}
 >
   <section class="hero">
     <div class="hero-text">

@@ -45,6 +45,8 @@ const crumb = Astro.props.crumb ?? navLinks.find((n) => n.href === path)?.label;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? '';
 
 const businessId = `${site.url}/#business`;
+const storeId = `${site.url}/showroom/#store`;
+const storeImage = new URL((await getImage({ src: wp(showroom.photo.image), width: 1200, format: 'jpg' })).src, site.url).href;
 const graph: Record<string, unknown>[] = [
   {
     '@type': 'HomeAndConstructionBusiness',
@@ -57,6 +59,33 @@ const graph: Record<string, unknown>[] = [
     description: site.description,
     telephone: site.phones.map((p) => p.href.replace('tel:', '')),
     email: site.email,
+    // head office (Colby Ave, the Google profile with the reviews); the showroom is the department below
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: site.office.street,
+      addressLocality: site.office.city,
+      addressRegion: site.office.region,
+      postalCode: site.office.postal,
+      addressCountry: site.office.country,
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: site.office.geo.lat, longitude: site.office.geo.lng },
+    hasMap: site.office.mapUrl,
+    department: { '@id': storeId },
+    openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: site.hours.days, opens: site.hours.opens, closes: site.hours.closes },
+    areaServed: { '@type': 'City', name: site.areaServed },
+    sameAs: site.socials.map((s) => s.href),
+  },
+  {
+    // the showroom: where customers are sent (1041 Erin St, its own Google profile)
+    '@type': 'Store',
+    '@id': storeId,
+    name: showroom.name,
+    legalName: showroom.legalName,
+    url: `${site.url}/showroom/`,
+    image: storeImage,
+    description: 'Large-format natural porcelain tile, XPS boards and stone veneer: showroom and sales.',
+    telephone: site.phones.map((p) => p.href.replace('tel:', '')),
+    email: site.email,
     address: {
       '@type': 'PostalAddress',
       streetAddress: site.address.street,
@@ -67,9 +96,8 @@ const graph: Record<string, unknown>[] = [
     },
     geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
     hasMap: site.mapUrl,
-    openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: site.hours.days, opens: site.hours.opens, closes: site.hours.closes },
-    areaServed: { '@type': 'City', name: site.areaServed },
-    sameAs: site.socials.map((s) => s.href),
+    openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: showroom.days, opens: showroom.opens, closes: showroom.closes },
+    parentOrganization: { '@id': businessId },
   },
   {
     '@type': 'WebSite',
@@ -157,7 +185,7 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
           <div class="foot-brand">
             <h2>{site.name}</h2>
             <p>Large-format natural porcelain tile: showroom, sales and installation. Serving {site.facts.serviceArea}.</p>
-            <p class="foot-legal">Tile sales and showroom: {showroom.name} ({showroom.legalName}), a subsidiary of Canadian Prime Solutions Inc. Head office: {site.headOffice}.</p>
+            <p class="foot-legal">Tile sales and showroom: {showroom.name} ({showroom.legalName}), a subsidiary of Canadian Prime Solutions Inc. Head office: <a href={site.office.mapUrl} rel="noopener" target="_blank">{site.headOffice}</a>.</p>
           </div>
           <div>
             <h2>Explore</h2>

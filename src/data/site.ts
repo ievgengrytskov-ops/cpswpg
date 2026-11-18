@@ -43,9 +43,15 @@ export const site = {
   address: { street: '1041 Erin St', city: 'Winnipeg', region: 'MB', postal: 'R3G 2X1', country: 'CA' },
   geo: { lat: 49.8953838, lng: -97.1838365 },
   mapUrl: 'https://www.google.com/maps?cid=15644327026287688787',
-  // Head office: kept low-key on purpose (only a small line in the footer), owner 2026-11-17
+  // Head office (owner 2026-11-17): must stay visible to Google, so it is the address of the
+  // business in JSON-LD and a linked line in the footer; on the pages customers are sent to the showroom.
+  office: {
+    street: '1081 Colby Ave', city: 'Winnipeg', region: 'MB', postal: 'R3T 2P8', country: 'CA',
+    geo: { lat: 49.7988439, lng: -97.1597431 },
+    mapUrl: 'https://www.google.com/maps?cid=1818885901365916689', // Google profile with the 14 reviews
+  },
   headOffice: '1081 Colby Ave, Winnipeg, MB R3T 2P8',
-  // The 14 Google reviews live on the Colby Ave profile: read them there, and the direct
+  // The 14 Google reviews live on the Colby Ave profile: read them there; the direct
   // "write a review" link (owner 2026-11-17) also points to that profile
   reviewsUrl: 'https://www.google.com/maps?cid=1818885901365916689',
   reviewUrl: 'https://g.page/r/CRG04SUX-z0ZEBE/review',

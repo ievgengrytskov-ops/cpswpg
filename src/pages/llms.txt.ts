@@ -20,6 +20,7 @@ export const GET: APIRoute = () => {
     `- Warranty: ${f.warranty}`,
     `- Google rating: ${f.googleRating.toFixed(1)} from ${f.googleReviews} reviews`,
     `- Address (showroom, visit us here): ${fullAddress}; ${site.hours.text}`,
+    `- Head office: ${site.headOffice}`,
     `- Phone: ${site.phones.map((p) => p.label).join(', ')}; WhatsApp and Viber: ${site.phones[0].label}`,
     `- Email: ${site.email}`,
     `- Prices: free estimate after a visit; the price depends on wall size, tile and wall condition`,
