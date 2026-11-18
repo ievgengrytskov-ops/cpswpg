@@ -24,5 +24,9 @@
   { "src": "cps/18.jpg", "alt": "Small bathroom with a marble-look porcelain tub surround and grey vanity", "category": "bathroom" },
   { "src": "cps/37.jpg", "alt": "Marble-look porcelain tub surround under a window, with a pedestal sink", "category": "bathroom" },
   { "src": "cps/11.jpg", "alt": "Bathroom with a porcelain tub surround, new toilet and vanity", "category": "bathroom" },
-  { "src": "cps/26.jpg", "alt": "Tub shower with linear wood-look porcelain tiles", "category": "bathroom" }
+  { "src": "cps/26.jpg", "alt": "Tub shower with linear wood-look porcelain tiles", "category": "bathroom" },
+  { "src": "2022/12/1-4-scaled.jpg", "alt": "Bathtub with rust stains on the enamel, before restoration", "category": "bathtub refinishing" },
+  { "src": "2022/12/2-4-scaled.jpg", "alt": "The same bathtub after enamel restoration", "category": "bathtub refinishing" },
+  { "src": "2022/12/3-3-scaled.jpg", "alt": "Refinished white bathtub with a glossy surface", "category": "bathtub refinishing" },
+  { "src": "2022/12/4-4-scaled.jpg", "alt": "Refinished bathtub in front of white wall tile", "category": "bathtub refinishing" }
 ]
