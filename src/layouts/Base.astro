@@ -6,7 +6,6 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Contact from '../components/Contact.astro';
 import Messengers from '../components/Messengers.astro';
-import Analytics from '@vercel/analytics/astro'; // cookieless page views, enabled in Vercel → Analytics
 import { getImage } from 'astro:assets';
 import { site, navLinks, fullAddress, showroom } from '../data/site';
 import { wp } from '../lib/images';
@@ -216,6 +215,5 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
         </div>
       </div>
     </footer>
-    <Analytics />
   </body>
 </html>
