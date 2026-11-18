@@ -22,7 +22,7 @@ export const GET: APIRoute = () => {
     `- Office: ${fullAddress}; ${site.hours.text}`,
     `- Phone: ${site.phones.map((p) => p.label).join(', ')}; WhatsApp and Viber: ${site.phones[0].label}`,
     `- Email: ${site.email}`,
-    `- Prices: quoted after a visit; depends on wall size, tile and wall condition`,
+    `- Prices: free estimate after a visit; the price depends on wall size, tile and wall condition`,
     '',
     `## Showroom: ${showroom.name}`,
     `- Address: ${showroomFullAddress}; ${showroom.hours}`,

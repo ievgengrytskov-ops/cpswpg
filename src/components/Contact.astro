@@ -12,9 +12,9 @@ const w3key = import.meta.env.PUBLIC_WEB3FORMS_KEY || site.form.web3formsKey;
 <section class="section section--panel" id="contacts">
   <div class="wrap contact-grid">
     <div>
-      <span class="eyebrow">Get a quote</span>
+      <span class="eyebrow">Free estimate</span>
       <Heading>{topic.heading[0]}{' '}<em>{topic.heading[1]}</em></Heading>
-      <p class="muted">Call, message us on WhatsApp or Viber, or send a short request. We work across {site.facts.serviceArea} and will get back to you to arrange a visit.</p>
+      <p class="muted">Call, message us on WhatsApp or Viber, or send a short request. We work across {site.facts.serviceArea} and will get back to you to arrange a free estimate.</p>
       <ul class="contact-list">
         {site.phones.map((p) => <li><a class="contact-phone" href={p.href}>{p.label}</a></li>)}
         <li><Messengers /></li>
