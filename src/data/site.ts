@@ -56,7 +56,8 @@ export const site = {
   reviewsUrl: 'https://www.google.com/maps?cid=1818885901365916689',
   reviewUrl: 'https://g.page/r/CRG04SUX-z0ZEBE/review',
   areaServed: 'Winnipeg',
-  // Hours from the Google Business Profile (owner 2026-11-16); the showroom keeps the same hours
+  // Office hours (calls, messages) from the Google Business Profile (owner 2026-11-16).
+  // The showroom has no walk-in hours: visits by appointment (showroom.hours, owner 2026-11-17)
   hours: { text: 'Mon–Fri 9 am – 5 pm', days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '17:00' },
   // Confirmed by the owner 2026-11-16
   facts: {
@@ -148,15 +149,12 @@ export const homeFaq = [
 export const showroom = {
   name: 'Canadian Porcelain Surfaces by CPS', // showroom brand, confirmed by the owner 2026-11-16
   legalName: '10286168 Manitoba Inc.', // tile sales and showroom company, a subsidiary of CPS (owner 2026-11-16)
-  // Owner 2026-11-16: same hours as the office (site.hours), Mon–Fri 9 am – 5 pm, closed on weekends
   street: '1041 Erin St',
   city: 'Winnipeg, MB R3G 2X1',
   postal: 'R3G 2X1',
   mapUrl: 'https://www.google.com/maps?cid=15644327026287688787', // showroom Google profile (owner 2026-11-17)
-  hours: 'Mon–Fri, 9 am – 5 pm',
-  days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-  opens: '09:00',
-  closes: '17:00',
+  // Owner 2026-11-17: no fixed opening hours, visits by appointment (book by phone/messengers)
+  hours: 'By appointment',
   delivery: 'Free delivery in Winnipeg when you buy 4 tiles or more, any size',
   photo: { image: 'cps/showroom-1.jpg', alt: 'Showroom with large marble-look porcelain tiles on display, a marble-look floor and a vanity with a round lit mirror' },
   // Showroom/supplier images of the tile (owner 2026-11-16). Product illustrations: keep on /showroom/ only, not in the gallery or "our work"

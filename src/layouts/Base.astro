@@ -96,7 +96,6 @@ const graph: Record<string, unknown>[] = [
     },
     geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
     hasMap: site.mapUrl,
-    openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: showroom.days, opens: showroom.opens, closes: showroom.closes },
     parentOrganization: { '@id': businessId },
   },
   {
@@ -199,8 +198,8 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
               {site.phones.map((p) => <li><a class="foot-big" href={p.href}>{p.label}</a></li>)}
               <li><Messengers class="msgr--foot" /></li>
               <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-              <li><a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a></li>
-              <li>{site.hours.text}</li>
+              <li>Showroom (by appointment): <a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a></li>
+              <li>Office: {site.hours.text}</li>
             </ul>
           </div>
           <div>

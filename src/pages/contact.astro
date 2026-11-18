@@ -13,7 +13,7 @@ const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fullAddress)
   <section class="section">
     <div class="wrap">
       <h2>Visit our <em>showroom</em></h2>
-      <p>Our showroom: <a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a>, open {site.hours.text}. We serve homeowners across {site.areaServed} and the surrounding area.</p>
+      <p>Our showroom: <a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a>, visits by appointment (call or message us, {site.hours.text}). We serve homeowners across {site.areaServed} and the surrounding area.</p>
       <div class="map">
         <iframe src={mapSrc} title={`Map: showroom at ${fullAddress}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
