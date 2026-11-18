@@ -116,7 +116,7 @@ p { margin: 0 0 1em; max-width: 66ch; }
 .callbar { display: none; }
 @media (max-width: 720px) {
   .callbar { display: grid; grid-template-columns: 1fr auto 1fr; position: fixed; z-index: 45; left: 0; right: 0; bottom: 0; background: var(--panel); border-top: 1px solid var(--line); }
-  .callbar a { padding: 0.95rem; text-align: center; font-weight: 600; text-decoration: none; color: var(--ink); }
+  .callbar a { padding: 0.95rem 0.6rem; text-align: center; font-weight: 600; font-size: 0.95rem; white-space: nowrap; text-decoration: none; color: var(--ink); }
   .callbar > a:last-child { background: var(--accent); color: var(--on-accent); }
   .callbar .msgr { gap: 0; border-inline: 1px solid var(--line); }
   .callbar .msgr-btn { padding: 0 0.95rem; border-radius: 0; border: 0; background: none; height: 100%; }
