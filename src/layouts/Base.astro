@@ -8,7 +8,7 @@ import Contact from '../components/Contact.astro';
 import Messengers from '../components/Messengers.astro';
 import Analytics from '@vercel/analytics/astro'; // cookieless page views, enabled in Vercel → Analytics
 import { getImage } from 'astro:assets';
-import { site, navLinks, fullAddress, showroom, showroomFullAddress } from '../data/site';
+import { site, navLinks, fullAddress, showroom } from '../data/site';
 import { wp } from '../lib/images';
 import emblem from '../assets/brand/emblem.png';
 
@@ -157,8 +157,7 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
           <div class="foot-brand">
             <h2>{site.name}</h2>
             <p>Large-format natural porcelain tile: showroom, sales and installation. Serving {site.facts.serviceArea}.</p>
-            <p>Showroom: <a href={showroom.mapUrl} rel="noopener" target="_blank">{showroomFullAddress}</a>, {showroom.hours}</p>
-            <p class="foot-legal">Tile sales and showroom: {showroom.name} ({showroom.legalName}), a subsidiary of Canadian Prime Solutions Inc.</p>
+            <p class="foot-legal">Tile sales and showroom: {showroom.name} ({showroom.legalName}), a subsidiary of Canadian Prime Solutions Inc. Head office: {site.headOffice}.</p>
           </div>
           <div>
             <h2>Explore</h2>
@@ -173,7 +172,7 @@ const ld = { '@context': 'https://schema.org', '@graph': graph };
               <li><Messengers class="msgr--foot" /></li>
               <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
               <li><a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a></li>
-              <li>Office: {site.hours.text}</li>
+              <li>{site.hours.text}</li>
             </ul>
           </div>
           <div>

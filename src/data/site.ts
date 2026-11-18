@@ -38,15 +38,19 @@ export const site = {
     { value: 1200 as number | null, suffix: '+', label: 'Projects Done' },
     { value: 99.9 as number | null, suffix: '%', label: 'Client Satisfaction' },
   ],
-  // From the Google Business Profile pin (owner-provided link, 2026-11-16).
-  // Main address confirmed by the owner 2026-11-16
-  address: { street: '1081 Colby Ave', city: 'Winnipeg', region: 'MB', postal: 'R3T 2P8', country: 'CA' },
-  geo: { lat: 49.7988439, lng: -97.1597431 },
-  mapUrl: 'https://www.google.com/maps?cid=1818885901365916689',
-  // Direct "write a review" link from the Google Business Profile (owner 2026-11-17)
+  // Owner 2026-11-17: the SHOWROOM is the address customers and Google should see everywhere.
+  // Google Business Profile of the showroom (CID 15644327026287688787, pin from the owner's link).
+  address: { street: '1041 Erin St', city: 'Winnipeg', region: 'MB', postal: 'R3G 2X1', country: 'CA' },
+  geo: { lat: 49.8953838, lng: -97.1838365 },
+  mapUrl: 'https://www.google.com/maps?cid=15644327026287688787',
+  // Head office: kept low-key on purpose (only a small line in the footer), owner 2026-11-17
+  headOffice: '1081 Colby Ave, Winnipeg, MB R3T 2P8',
+  // The 14 Google reviews live on the Colby Ave profile: read them there, and the direct
+  // "write a review" link (owner 2026-11-17) also points to that profile
+  reviewsUrl: 'https://www.google.com/maps?cid=1818885901365916689',
   reviewUrl: 'https://g.page/r/CRG04SUX-z0ZEBE/review',
   areaServed: 'Winnipeg',
-  // Office hours from the Google Business Profile (owner screenshot 2026-11-16). The showroom has its own hours (showroom.hours)
+  // Hours from the Google Business Profile (owner 2026-11-16); the showroom keeps the same hours
   hours: { text: 'Mon–Fri 9 am – 5 pm', days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '17:00' },
   // Confirmed by the owner 2026-11-16
   facts: {
@@ -142,7 +146,7 @@ export const showroom = {
   street: '1041 Erin St',
   city: 'Winnipeg, MB R3G 2X1',
   postal: 'R3G 2X1',
-  mapUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('1041 Erin St, Winnipeg, MB R3G 2X1'),
+  mapUrl: 'https://www.google.com/maps?cid=15644327026287688787', // showroom Google profile (owner 2026-11-17)
   hours: 'Mon–Fri, 9 am – 5 pm',
   days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
   opens: '09:00',

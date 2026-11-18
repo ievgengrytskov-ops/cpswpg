@@ -19,7 +19,7 @@ export const GET: APIRoute = () => {
     `- Typical bathtub surround installation: ${f.installDays}, often over the existing tile`,
     `- Warranty: ${f.warranty}`,
     `- Google rating: ${f.googleRating.toFixed(1)} from ${f.googleReviews} reviews`,
-    `- Office: ${fullAddress}; ${site.hours.text}`,
+    `- Address (showroom, visit us here): ${fullAddress}; ${site.hours.text}`,
     `- Phone: ${site.phones.map((p) => p.label).join(', ')}; WhatsApp and Viber: ${site.phones[0].label}`,
     `- Email: ${site.email}`,
     `- Prices: free estimate after a visit; the price depends on wall size, tile and wall condition`,
