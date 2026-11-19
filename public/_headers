@@ -3,7 +3,7 @@
   Cache-Control: public, max-age=31536000, immutable
 
 # keep the test copies on workers.dev / pages.dev out of search; only cpswpg.ca is indexed
-https://cpswpg.ievgen-grytskov.workers.dev/*
+https://cpswpg.cpswpg.workers.dev/*
   X-Robots-Tag: noindex
 https://cpswpg.pages.dev/*
   X-Robots-Tag: noindex

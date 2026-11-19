@@ -4,7 +4,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cpswpg",
   "compatibility_date": "2026-11-01",
-  // test address cpswpg.ievgen-grytskov.workers.dev (noindex via _headers); no per-branch preview URLs
+  // test address cpswpg.cpswpg.workers.dev (noindex via _headers); no per-branch preview URLs
   "workers_dev": true,
   "preview_urls": false,
   "assets": {
