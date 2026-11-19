@@ -2,7 +2,8 @@
 // FAQ section. Pass the same items to <Base faq={...}> so they also go into JSON-LD (FAQPage).
 import { site } from '../data/site';
 interface Props {
-  items: { q: string; a: string }[];
+  // more: optional link under the answer (not part of the JSON-LD text)
+  items: { q: string; a: string; more?: { href: string; label: string } }[];
   panel?: boolean;
 }
 const { items, panel = false } = Astro.props;
@@ -19,7 +20,7 @@ const phone = site.phones[0];
       {items.map((q) => (
         <details>
           <summary>{q.q}</summary>
-          <div><p>{q.a}</p></div>
+          <div><p>{q.a}</p>{q.more && <p><a class="link-arrow" href={q.more.href}>{q.more.label}</a></p>}</div>
         </details>
       ))}
     </div>

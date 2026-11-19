@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Contact from '../components/Contact.astro';
-import { site, fullAddress } from '../data/site';
+import { site, fullAddress, bookVisitHref } from '../data/site';
 const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fullAddress)}&z=15&output=embed`;
 ---
 <Base
@@ -14,6 +14,7 @@ const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fullAddress)
     <div class="wrap">
       <h2>Visit our <em>showroom</em></h2>
       <p>Our showroom: <a href={site.mapUrl} rel="noopener" target="_blank">{fullAddress}</a>, visits by appointment (call or message us, {site.hours.text}). We serve homeowners across {site.areaServed} and the surrounding area.</p>
+      <p><a class="btn" href={bookVisitHref} rel="noopener" target="_blank">Book a visit on WhatsApp</a></p>
       <div class="map">
         <iframe src={mapSrc} title={`Map: showroom at ${fullAddress}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>

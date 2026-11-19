@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
-import { site, showroom, showroomAddress, showroomFullAddress, showroomFaq } from '../data/site';
+import { site, showroom, showroomAddress, showroomFullAddress, showroomFaq, bookVisitHref } from '../data/site';
 import { wp } from '../lib/images';
 
 const phone = site.phones[0];
@@ -28,7 +28,8 @@ const natural = [
       </h1>
       <p class="lead">Come and see full-size tiles at our new showroom. We sell large-format porcelain tile, XPS boards and stone veneer, for your own project or with our installation.</p>
       <div class="ctas">
-        <a class="btn" href={phone.href}>Call {phone.label}</a>
+        <a class="btn" href={bookVisitHref} rel="noopener" target="_blank">Book a visit</a>
+        <a class="btn btn--ghost" href={phone.href}>Call {phone.label}</a>
         <a class="link-arrow" href={showroom.mapUrl} rel="noopener" target="_blank">Get directions</a>
       </div>
     </div>
@@ -117,7 +118,11 @@ const natural = [
         <span class="eyebrow">Visit us</span>
         <h2>{showroom.street}</h2>
         <p class="muted">{showroom.city}</p>
-        <p class="hours"><span class="eyebrow">Opening hours</span>{showroom.hours}. Call or message us to book a visit.</p>
+        <p class="hours"><span class="eyebrow">Opening hours</span>{showroom.hours}</p>
+        <p class="muted">Message us on WhatsApp or call, and we will set a time that suits you.</p>
+        <div class="ctas">
+          <a class="btn" href={bookVisitHref} rel="noopener" target="_blank">Book a visit on WhatsApp</a>
+        </div>
         <ul class="contact-list">
           {site.phones.map((p) => <li><a class="contact-phone" href={p.href}>{p.label}</a></li>)}
         </ul>

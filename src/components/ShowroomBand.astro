@@ -1,7 +1,7 @@
 ---
 // Short showroom & sales block for the home page and product pages. Full page: /showroom/
 import Photo from './Photo.astro';
-import { showroom, showroomAddress } from '../data/site';
+import { showroom, showroomAddress, bookVisitHref } from '../data/site';
 ---
 <section class="section section--panel showroom-band">
   <div class="wrap about">
@@ -18,8 +18,8 @@ import { showroom, showroomAddress } from '../data/site';
       <p class="muted">{showroomAddress} · visits by appointment</p>
       <p class="delivery">{showroom.delivery}</p>
       <div class="ctas">
-        <a class="btn" href="/showroom/">Visit the showroom</a>
-        <a class="link-arrow" href={showroom.mapUrl} rel="noopener" target="_blank">Get directions</a>
+        <a class="btn" href={bookVisitHref} rel="noopener" target="_blank">Book a visit</a>
+        <a class="link-arrow" href="/showroom/">About the showroom</a>
       </div>
     </div>
   </div>

@@ -136,7 +136,7 @@ export const recentWork = [
 export const homeFaq = [
   { q: 'How long does a bathtub surround take?', a: 'Most bathtub surrounds are installed in 2–3 days.' },
   { q: 'Can large porcelain tiles go over my old tile?', a: 'Often, yes. At 1/4″ they are light enough to be installed over existing tile when the tile is in good condition. We check this during the visit.' },
-  { q: 'How much does it cost?', a: 'Every bathroom is different: size, the tiles you choose and the condition of the walls all matter. The estimate is free: we measure, look at the walls and give you an exact price.' },
+  { q: 'How much does it cost?', a: 'Every bathroom is different: size, the tiles you choose and the condition of the walls all matter. The estimate is free: we measure, look at the walls and give you an exact price.', more: { href: '/guides/tub-surround-cost-factors/', label: 'What sets the price of a tub surround' } },
   { q: 'What sizes are available?', a: 'Large-format porcelain tile comes in 24″ × 48″, 71″ × 36″ and 47″ × 106″, all 1/4″ thick, plus other sizes on request. You can see them at our showroom.' },
   { q: 'Is there a warranty?', a: 'Yes, there is a 5-year warranty on the porcelain tile.' },
   { q: 'Is porcelain tile a natural material?', a: 'Yes. Porcelain is made from natural kaolin clay, quartz and feldspar, pressed and fired at over 1,200 °C. It contains no plastic or resin, absorbs almost no water and its colour does not fade.' },
@@ -276,3 +276,5 @@ const topics: Record<string, Topic> = {
 const defaultTopic: Topic = { service: '', wa: hi + "I'd like a quote. I can send photos.", heading: ['Tell us about', 'your project'] };
 export const topicFor = (path: string): Topic => topics[path] ?? defaultTopic;
 export const whatsappHref = (path: string) => `${site.messengers[0].href}?text=${encodeURIComponent(topicFor(path).wa)}`;
+// Showroom visits are by appointment (owner 2026-11-17): WhatsApp with a booking message
+export const bookVisitHref = `${site.messengers[0].href}?text=${encodeURIComponent(hi + "I'd like to book a visit to your showroom at " + showroom.street + '. When would be a good time?')}`;

@@ -188,7 +188,7 @@ const img = (src: string, alt: string, sizes: string, eager = false) => {
         {homeFaq.map((q) => (
           <details>
             <summary>{q.q}</summary>
-            <div><p>{q.a}</p></div>
+            <div><p>{q.a}</p>{q.more && <p><a class="link-arrow" href={q.more.href}>{q.more.label}</a></p>}</div>
           </details>
         ))}
       </div>
