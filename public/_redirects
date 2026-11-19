@@ -1,4 +1,4 @@
-# Cloudflare Pages: old WordPress URLs (same rules as vercel.json). Specific rules first.
+# Cloudflare (Workers static assets): old WordPress URLs (same rules as vercel.json). Specific rules first.
 /reviews            /#testimonials     301
 /reviews/           /#testimonials     301
 /porcelain-tiles1   /porcelain-tiles/  301

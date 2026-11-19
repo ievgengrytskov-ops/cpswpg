@@ -1,0 +1,14 @@
+// Cloudflare Workers (static assets only, no server code): serves the Astro build from dist/.
+// Redirects: public/_redirects, headers: public/_headers (both copied into dist by Astro).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cpswpg",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    // /about -> /about/ (matches trailingSlash: 'always' in astro.config.mjs)
+    "html_handling": "auto-trailing-slash",
+    // unknown URLs get dist/404.html with status 404
+    "not_found_handling": "404-page"
+  }
+}
